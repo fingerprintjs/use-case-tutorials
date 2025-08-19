@@ -22,6 +22,15 @@ await app.register(fastifyStatic, {
   index: "index.html",
 });
 
+// Expose public key to the browser
+app.get("/config.js", (_req, reply) => {
+  reply
+    .type("application/javascript")
+    .send(
+      `window.FP_PUBLIC_API_KEY = "${process.env.FP_PUBLIC_API_KEY || ""}";`
+    );
+});
+
 // Validate the coupon code
 app.post("/api/validate-coupon", async (request, reply) => {
   const { coupon } = request.body || {};
