@@ -1,7 +1,7 @@
 import { db } from "./db.js";
 
 // Validate the coupon code
-export function validateCoupon(code) {
+export async function validateCoupon(code) {
   if (!code) {
     return { success: false, error: "Coupon is required." };
   }
