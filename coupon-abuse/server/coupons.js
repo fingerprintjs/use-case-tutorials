@@ -1,15 +1,54 @@
 import { db } from "./db.js";
+import { config } from "dotenv";
+import {
+  FingerprintJsServerApiClient,
+  Region,
+} from "@fingerprintjs/fingerprintjs-pro-server-api";
+
+config();
+
+// Change region to match your workspace region
+// (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
+const fpClient = new FingerprintJsServerApiClient({
+  apiKey: process.env.FP_SERVER_API_KEY,
+  region: Region.Global,
+});
 
 // Validate the coupon code
-export function validateCoupon(code) {
+export async function validateCoupon(code, requestId) {
   if (!code) {
-    return { success: false, error: "Coupon is required." };
+    console.error("Missing coupon code.");
+    return { success: false, error: "Coupon validation failed." };
+  }
+
+  if (!requestId) {
+    console.error("Missing requestId.");
+    return { success: false, error: "Coupon validation failed." };
   }
 
   const coupon = getValidCoupon(code);
   if (!coupon) {
-    return { success: false, error: "Invalid coupon." };
+    console.error("Invalid coupon code.");
+    return { success: false, error: "Coupon validation failed." };
   }
+
+  const event = await fpClient.getEvent(requestId);
+
+  const botDetected = event.products.botd.data.bot.result !== "notDetected";
+
+  if (botDetected) {
+    console.error("Bot detected.");
+    return { success: false, error: "Coupon validation failed." };
+  }
+
+  const visitorId = event.products.identification.data.visitorId;
+
+  if (hasRedeemed(coupon.code, visitorId)) {
+    console.error("Coupon already redeemed.");
+    return { success: false, error: "Coupon validation failed." };
+  }
+
+  recordRedemption(coupon.code, visitorId);
 
   return { success: true, ...coupon };
 }
@@ -29,4 +68,18 @@ function getValidCoupon(code) {
   return row
     ? { code: row.code.toUpperCase(), discountPct: row.discountPct }
     : null;
+}
+
+function hasRedeemed(code, visitorId) {
+  return !!db
+    .prepare(
+      `SELECT 1 FROM redemptions WHERE code = ? AND visitorId = ? LIMIT 1`
+    )
+    .get(code, visitorId);
+}
+
+function recordRedemption(code, visitorId) {
+  db.prepare(
+    `INSERT INTO redemptions (code, visitorId, createdAt) VALUES (?, ?, ?)`
+  ).run(code, visitorId, Date.now());
 }

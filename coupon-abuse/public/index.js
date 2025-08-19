@@ -1,3 +1,12 @@
+// Initialize the Fingerprint client agent
+const fpPromise = import(
+  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
+).then(
+  // Change region to match your workspace region
+  // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
+  (FingerprintJS) => FingerprintJS.load({ region: "us" })
+);
+
 // --- Config ---
 const TAX_RATE = 0.12;
 const CART_SUBTOTAL = 356.02 + 102.59; // matches static demo items in index.html
@@ -69,11 +78,14 @@ applyBtn.addEventListener("click", async () => {
     return;
   }
 
+  const fp = await fpPromise;
+  const { requestId } = await fp.get();
+
   try {
     const res = await fetch("/api/validate-coupon", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ coupon: code }),
+      body: JSON.stringify({ coupon: code, requestId }),
     });
     const data = await res.json();
 
