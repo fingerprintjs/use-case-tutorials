@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="index.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 p-6">
+    <div class="mt-16 max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+      <!-- Items -->
+      <div class="flex items-start gap-4 mb-6">
+        <img
+          src="/shoeAirMax.svg"
+          alt="Nike AirMax Max"
+          class="w-24 h-24 rounded border"
+        />
+        <div class="flex-1">
+          <h3 class="font-semibold text-lg">Nike AirMax Max</h3>
+          <p class="text-sm text-gray-500">Fingerprint Orange • Size 8</p>
+          <p class="mt-4 font-semibold">$356.02</p>
+        </div>
+        <div class="text-sm text-gray-700">Qty: 1</div>
+      </div>
+
+      <div class="flex items-start gap-4 mb-6">
+        <img
+          src="/shoeAllStars.svg"
+          alt="All Stars Limited Edition"
+          class="w-24 h-24 rounded border"
+        />
+        <div class="flex-1">
+          <h3 class="font-semibold text-lg">All Stars Limited Edition</h3>
+          <p class="text-sm text-gray-500">Fingerprint Orange • Size 8</p>
+          <p class="mt-4 font-semibold">$102.59</p>
+        </div>
+        <div class="text-sm text-gray-700">Qty: 1</div>
+      </div>
+
+      <!-- Summary -->
+      <div class="border-t pt-4 text-md text-gray-700">
+        <div class="flex justify-between mb-2">
+          <span>Subtotal</span>
+          <span id="subtotalValue">$458.61</span>
+        </div>
+
+        <!-- Coupon Discount (hidden until applied by JS) -->
+        <div
+          id="discountRow"
+          class="hidden flex justify-between items-center border border-dashed border-orange-400 bg-orange-50 text-orange-600 px-4 py-2 rounded mb-4"
+        >
+          <span class="font-semibold">
+            Coupon discount <span id="discountPercent">0</span>%
+          </span>
+          <span>
+            -<span id="discountValue" class="font-semibold">$0.00</span>
+          </span>
+        </div>
+
+        <div class="flex justify-between mb-2">
+          <span>Taxes</span>
+          <span id="taxValue">$55.03</span>
+        </div>
+
+        <div class="flex justify-between font-semibold text-base">
+          <span>Total</span>
+          <span id="totalValue">$513.64</span>
+        </div>
+      </div>
+
+      <!-- Coupon Input -->
+      <div class="mt-6 border rounded p-4">
+        <p class="font-semibold mb-2">
+          Do you have a coupon? Apply it to get a discount!
+        </p>
+        <div class="flex gap-2">
+          <input
+            id="couponInput"
+            type="text"
+            class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm uppercase"
+            autocomplete="off"
+            placeholder="Enter coupon"
+          />
+          <button
+            id="applyCouponButton"
+            class="bg-orange-500 text-white px-4 py-2 rounded text-sm hover:bg-orange-600"
+            type="button"
+          >
+            Apply
+          </button>
+        </div>
+
+        <!-- Result Message (hidden until applied by JS) -->
+        <div
+          id="couponResult"
+          class="hidden mt-2 flex items-center justify-between gap-2 text-sm px-4 py-2 rounded"
+        >
+          <div class="flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              id="couponIcon"
+            ></svg>
+            <span id="couponMessage"></span>
+          </div>
+
+          <button
+            id="clearCouponResult"
+            class="text-gray-600 text-sm"
+            type="button"
+            aria-label="Close message"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirm Button (fake) -->
+      <div class="text-center mt-6">
+        <p class="text-gray-600 text-sm hover:text-orange-500 cursor-pointer">
+          Confirm order
+        </p>
+      </div>
+    </div>
+
+    <!-- Reset DB Button -->
+    <div class="text-center mt-6">
+      <p
+        id="resetDBLink"
+        class="text-gray-400 text-sm hover:text-gray-600 cursor-pointer"
+      >
+        Reset demo DB
+      </p>
+    </div>
+  </body>
+</html>
