@@ -36,7 +36,7 @@ app.post("/api/validate-coupon", async (request, reply) => {
   const { coupon } = request.body || {};
   const code = (coupon || "").toUpperCase().trim();
 
-  const result = validateCoupon(code);
+  const result = await validateCoupon(code);
   return reply.send(result);
 });
 
