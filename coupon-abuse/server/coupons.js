@@ -54,6 +54,7 @@ export async function validateCoupon(code, requestId) {
 }
 
 // --- Helpers ---
+// Retrieve a valid coupon from the database
 function getValidCoupon(code) {
   const row = db
     .prepare(
@@ -70,6 +71,7 @@ function getValidCoupon(code) {
     : null;
 }
 
+// Check if the visitor has already redeemed the coupon code
 function hasRedeemed(code, visitorId) {
   return !!db
     .prepare(
@@ -78,6 +80,7 @@ function hasRedeemed(code, visitorId) {
     .get(code, visitorId);
 }
 
+// Record the visitor redeeming the coupon
 function recordRedemption(code, visitorId) {
   db.prepare(
     `INSERT INTO redemptions (code, visitorId, createdAt) VALUES (?, ?, ?)`
