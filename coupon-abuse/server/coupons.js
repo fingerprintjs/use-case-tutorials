@@ -9,7 +9,7 @@ config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
-const fpClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintJsServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -32,7 +32,7 @@ export async function validateCoupon(code, requestId) {
     return { success: false, error: "Coupon validation failed." };
   }
 
-  const event = await fpClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(requestId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
 
