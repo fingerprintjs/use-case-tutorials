@@ -23,8 +23,8 @@ npm run dev
 
 A default account is included for testing:
 
-- Email: demo@example.com
-- Password: password123
+- Email: `demo@example.com`
+- Password: `password123`
 
 ### Resetting the demo database
 
