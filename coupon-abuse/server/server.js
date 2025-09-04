@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 const app = Fastify({ logger: { level: "error" } }); // Set to info or debug to see more logs
 
 // Global error handler
-app.setErrorHandler((error, request, reply) => {
+app.setErrorHandler((error, _req, reply) => {
   app.log.error(error);
   reply.code(500).send({
     error: `Error: ${error.message} (Shown for tutorial debugging purposes)`,
@@ -40,8 +40,8 @@ app.get("/config.js", (_req, reply) => {
 });
 
 // Validate the coupon code
-app.post("/api/validate-coupon", async (request, reply) => {
-  const { coupon, requestId } = request.body || {};
+app.post("/api/validate-coupon", async (req, reply) => {
+  const { coupon, requestId } = req.body || {};
   const code = (coupon || "").toUpperCase().trim();
 
   const result = await validateCoupon(code, requestId);
