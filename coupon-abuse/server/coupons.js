@@ -15,7 +15,7 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 // Validate the coupon code
-export async function validateCoupon(code, requestId) {
+export async function validateCoupon(code) {
   if (!code) {
     console.error("Missing coupon code.");
     return { success: false, error: "Coupon validation failed." };
@@ -51,8 +51,8 @@ export async function validateCoupon(code, requestId) {
   const visitorId = event.products.identification.data.visitorId;
 
   if (hasRedeemed(coupon.code, visitorId)) {
-    console.error("Coupon already redeemed.");
-    return { success: false, error: "Coupon validation failed." };
+    console.error("Coupon has already been redeemed.");
+    return { success: false, error: "Coupon has already been redeemed." };
   }
 
   recordRedemption(coupon.code, visitorId);

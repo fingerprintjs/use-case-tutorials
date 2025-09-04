@@ -13,7 +13,15 @@ seedDefaultCoupons();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const app = Fastify();
+const app = Fastify({ logger: { level: "error" } }); // Set to info or debug to see more logs
+
+// Global error handler
+app.setErrorHandler((error, request, reply) => {
+  app.log.error(error);
+  reply.code(500).send({
+    error: `Error: ${error.message} (Shown for tutorial debugging purposes)`,
+  });
+});
 
 // Serve static files from the "public" folder
 await app.register(fastifyStatic, {
