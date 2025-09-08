@@ -1,6 +1,6 @@
-# Fingerprint Account Sharing Prevention Tutorial
+# Fingerprint Credential Stuffing Prevention Tutorial
 
-This use case tutorial shows how to prevent account sharing using Fingerprint.
+This use case tutorial shows how to prevent credential stuffing attacks using Fingerprint.
 
 ## Setup
 
@@ -19,6 +19,16 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Running the bot test
+
+This repo includes a simple Puppeteer script to simulate a headless bot login attempt. To run it, use the following command while the server is running:
+
+```bash
+node test-bot.js
+```
+
+The request will be flagged and rejected by the Bot Detection signal.
+
 ### Test account
 
 A default account is included for testing:
@@ -26,9 +36,9 @@ A default account is included for testing:
 - Email: `demo@example.com`
 - Password: `password123`
 
-### Resetting the demo database
+## Resetting the demo database
 
-To clear stored device associations:
+To clear all redemptions and reset coupon usage:
 
 - Click **Reset demo DB** at the bottom of the demo app page, or
 - Run this from the terminal:
