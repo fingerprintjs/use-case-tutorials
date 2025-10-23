@@ -1,5 +1,4 @@
 import { db } from "./db.js";
-import crypto from "crypto";
 const MONTHLY_RATE = 0.15;
 
 export async function requestLoan(data) {
@@ -10,15 +9,12 @@ export async function requestLoan(data) {
     return { success: false, message: "Missing required fields." };
   }
 
-  const personalHash = genPersonalHash({ firstName, lastName, monthlyIncome });
-
   const loanData = {
     firstName,
     lastName,
     monthlyIncome,
     loanAmount,
     loanTerms,
-    personalHash,
   };
 
   // Check affordability
@@ -46,36 +42,18 @@ export async function requestLoan(data) {
 }
 
 // --- Helpers ---
-// Generate personal hash
-function genPersonalHash({ firstName, lastName, monthlyIncome }) {
-  const norm = [
-    firstName.trim().toLowerCase().replace(/\s+/g, ""),
-    lastName.trim().toLowerCase().replace(/\s+/g, ""),
-    Number(monthlyIncome),
-  ].join("|");
-  return crypto.createHash("sha256").update(norm).digest("hex");
-}
-
 // Record loan application
 function recordLoanApplication(data, status) {
-  const {
-    firstName,
-    lastName,
-    loanAmount,
-    monthlyIncome,
-    loanTerms,
-    personalHash,
-  } = data;
+  const { firstName, lastName, loanAmount, monthlyIncome, loanTerms } = data;
 
   db.prepare(
-    `INSERT INTO loan_applications (firstName, lastName, monthlyIncome, loanAmount, loanTerms, personalHash, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    `INSERT INTO loan_applications (firstName, lastName, monthlyIncome, loanAmount, loanTerms, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)`
   ).run(
     firstName,
     lastName,
     monthlyIncome,
     loanAmount,
     loanTerms,
-    personalHash,
     status,
     Date.now()
   );

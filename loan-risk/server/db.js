@@ -13,7 +13,6 @@ export function initDb() {
       monthlyIncome INTEGER NOT NULL,
       loanAmount INTEGER NOT NULL,
       loanTerms INTEGER NOT NULL,
-      personalHash TEXT NOT NULL,
       status TEXT NOT NULL,
       createdAt INTEGER NOT NULL
     );
