@@ -18,5 +18,8 @@
     "better-sqlite3": "^12.2.0",
     "dotenv": "^17.2.1",
     "fastify": "^5.5.0"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.26.1"
   }
 }
