@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request a loan</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <script src="index.js" defer></script>
+    <style>
+      .slider {
+        width: 100%;
+        appearance: none;
+        background: #e5e7eb;
+        height: 0.5rem;
+        border: solid 1px #cacaca;
+        border-radius: 0.5rem;
+        outline: none;
+      }
+
+      .slider::-webkit-slider-thumb {
+        appearance: none;
+        height: 1rem;
+        width: 1rem;
+        border-radius: 9999px;
+        background: #f97316; /* orange-500 */
+      }
+
+      .slider::-moz-range-thumb {
+        height: 1rem;
+        width: 1rem;
+        border-radius: 9999px;
+        background: #f97316;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50">
+    <div class="min-h-screen flex flex-col items-center justify-center p-6">
+      <section class="w-full max-w-2xl bg-white rounded-xl shadow p-6">
+        <!-- Personal details -->
+        <div class="space-y-4">
+          <label class="block">
+            <span class="block text-lg font-medium">First name</span>
+            <input
+              id="firstName"
+              type="text"
+              value="Jamie"
+              class="mt-1 px-3 py-3 w-full rounded-md border border-gray-200 shadow-sm"
+            />
+          </label>
+
+          <label class="block">
+            <span class="block text-lg font-medium">Last name</span>
+            <input
+              id="lastName"
+              type="text"
+              value="Doe"
+              class="mt-1 px-3 py-3 w-full rounded-md border border-gray-200 shadow-sm"
+            />
+          </label>
+        </div>
+
+        <hr class="my-6" />
+
+        <!-- Loan details -->
+        <div class="space-y-6">
+          <!-- Amount needed -->
+          <div>
+            <p class="font-medium text-gray-800">How much money do you need?</p>
+            <div class="mt-2 flex gap-3 items-center">
+              <input
+                id="amount"
+                type="range"
+                min="1000"
+                max="10000"
+                value="1000"
+                class="slider"
+              />
+              <p id="amountValue" class="w-24 text-right pr-3"></p>
+            </div>
+          </div>
+
+          <!-- Income -->
+          <div>
+            <p class="font-medium text-gray-800">
+              How much do you make per month?
+            </p>
+            <div class="mt-2 flex gap-3 items-center">
+              <input
+                id="income"
+                type="range"
+                min="500"
+                max="30000"
+                value="10000"
+                class="slider"
+              />
+              <p id="incomeValue" class="w-24 text-right pr-3"></p>
+            </div>
+          </div>
+
+          <!-- Term -->
+          <div>
+            <p class="font-medium text-gray-800">Loan term (months)</p>
+            <div class="mt-2 flex gap-3 items-center">
+              <input
+                id="term"
+                type="range"
+                min="1"
+                max="48"
+                value="2"
+                class="slider"
+              />
+              <p id="termValue" class="w-24 text-right pr-3"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly installment -->
+        <div class="text-center mt-8">
+          <p class="">
+            Your monthly installment would be:
+            <span
+              id="monthlyInstallment"
+              class="ml-2 inline-block rounded-md bg-orange-100 text-orange-600 px-3 py-1 border border-orange-300"
+            >
+            </span>
+          </p>
+        </div>
+
+        <!-- Result message -->
+        <div
+          id="resultBox"
+          class="hidden mt-2 text-sm px-4 py-2 rounded flex justify-between items-center"
+        >
+          <span id="resultMessage"></span>
+          <button id="clearResult" type="button" aria-label="Close message">
+            &times;
+          </button>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-8 flex justify-center">
+          <button
+            id="requestBtn"
+            class="rounded-lg bg-orange-500 hover:bg-orange-600 text-white px-6 py-3"
+          >
+            Request loan
+          </button>
+        </div>
+      </section>
+
+      <!-- Reset DB link -->
+      <p
+        id="resetDBLink"
+        class="text-center text-sm text-gray-400 hover:text-gray-600 mt-4 cursor-pointer"
+      >
+        Reset demo DB
+      </p>
+    </div>
+  </body>
+</html>
