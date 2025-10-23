@@ -7,6 +7,8 @@ import {
 
 config();
 
+// Change region to match your workspace region
+// (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintJsServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,

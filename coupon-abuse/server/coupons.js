@@ -15,7 +15,7 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 // Validate the coupon code
-export async function validateCoupon(code) {
+export async function validateCoupon(code, requestId) {
   if (!code) {
     console.error("Missing coupon code.");
     return { success: false, error: "Coupon validation failed." };

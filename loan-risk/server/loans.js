@@ -9,6 +9,8 @@ const MONTHLY_RATE = 0.15;
 
 config();
 
+// Change region to match your workspace region
+// (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintJsServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
@@ -103,16 +105,6 @@ export async function requestLoan(data) {
 }
 
 // --- Helpers ---
-// Generate personal hash
-function genPersonalHash({ firstName, lastName, monthlyIncome }) {
-  const norm = [
-    firstName.trim().toLowerCase().replace(/\s+/g, ""),
-    lastName.trim().toLowerCase().replace(/\s+/g, ""),
-    Number(monthlyIncome),
-  ].join("|");
-  return crypto.createHash("sha256").update(norm).digest("hex");
-}
-
 // Record loan application
 function recordLoanApplication(data, status) {
   const {
@@ -136,6 +128,16 @@ function recordLoanApplication(data, status) {
     status,
     Date.now()
   );
+}
+
+// Generate personal hash
+function genPersonalHash({ firstName, lastName, monthlyIncome }) {
+  const norm = [
+    firstName.trim().toLowerCase().replace(/\s+/g, ""),
+    lastName.trim().toLowerCase().replace(/\s+/g, ""),
+    Number(monthlyIncome),
+  ].join("|");
+  return crypto.createHash("sha256").update(norm).digest("hex");
 }
 
 // Check if the visitor details are consistent
