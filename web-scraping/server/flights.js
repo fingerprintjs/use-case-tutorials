@@ -30,6 +30,14 @@ export async function fetchFlights({ from, to, departDate, requestId }) {
     return { flights: [] };
   }
 
+  // Check for a high suspect score
+  const suspectScore = event.products?.suspectScore?.data?.result || 0;
+
+  if (suspectScore > 20) {
+    console.error(`High Suspect Score detected: ${suspectScore}`);
+    return { flights: [] };
+  }
+
   // Otherwise, fetch flights
   let flights = db
     .prepare(
