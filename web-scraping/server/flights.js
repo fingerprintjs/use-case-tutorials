@@ -1,6 +1,11 @@
 import { db } from "./db.js";
 
 export async function fetchFlights({ from, to, departDate }) {
+  if (!from || !to || !departDate) {
+    console.error("Missing required fields.");
+    return { flights: [] };
+  }
+
   let flights = db
     .prepare(
       `SELECT * FROM flights WHERE origin_airport = ? AND destination_airport = ?`
@@ -11,7 +16,7 @@ export async function fetchFlights({ from, to, departDate }) {
 
   console.log(`Found ${flights.length} flights`);
 
-  return { success: true, flights };
+  return { flights };
 }
 
 // --- Demo helpers ---

@@ -80,13 +80,11 @@ function populateInputs() {
 }
 
 // Display flight results
-function displayFlights(flights, message = null) {
+function displayFlights(flights) {
   resultBox.innerHTML = "";
 
   if (flights.length === 0) {
     const el = tmplEmpty.content.cloneNode(true);
-    el.querySelector("[data-empty-message]").textContent =
-      message || "No flights found. Choose a different route.";
     resultBox.appendChild(el);
     return;
   }
@@ -154,10 +152,10 @@ searchBtn.addEventListener("click", async () => {
 
     const data = await res.json();
 
-    displayFlights(data.flights, data.message || null);
+    displayFlights(data.flights || []);
   } catch (err) {
     console.error("Flights fetch request failed:", err);
-    displayFlights([], "Something went wrong. Please try again.");
+    displayFlights([]);
   }
 });
 
