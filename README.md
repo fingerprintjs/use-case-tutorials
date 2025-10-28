@@ -13,8 +13,9 @@ Current tutorials:
 - [**Coupon abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/coupon-abuse) – Enforce one-time coupon usage per visitor.
 - [**Credential stuffing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/credential-stuffing) – Prevent credential stuffing attacks and protect against account takeover.
 - [**Loan application fraud prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/loan-risk) – Collect high-quality, low-risk loan applications and prevent loan application fraud.
+- [**Web scraping prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/web-scraping) – Prevent your proprietary content from being scraped by bots.
 
-More tutorials will be added over time.
+_More tutorials will be added over time._
 
 ## General setup
 
