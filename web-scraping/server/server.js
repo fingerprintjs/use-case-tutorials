@@ -38,7 +38,7 @@ app.get("/config.js", (_req, reply) => {
     );
 });
 
-// Attempt to login
+// Attempt to fetch flights
 app.post("/api/fetch-flights", async (req, reply) => {
   const result = await fetchFlights(req.body);
   return reply.send(result);
