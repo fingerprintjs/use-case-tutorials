@@ -1,4 +1,4 @@
-# Fingerprint Loan ApplicationFraud Prevention Tutorial
+# Fingerprint Loan Application Fraud Prevention Tutorial
 
 This use case tutorial shows how to collect high-quality, low-risk loan applications and prevent loan application fraud using Fingerprint.
 
