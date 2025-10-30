@@ -11,18 +11,6 @@
   </head>
 
   <body class="bg-gray-50 text-gray-900">
-    <!-- Free article count -->
-    <div
-      id="freeCounter"
-      class="w-full bg-orange-100 border-b border-orange-200"
-    >
-      <div
-        class="mx-auto max-w-6xl px-4 py-2 text-sm text-orange-700 flex items-center justify-center"
-      >
-        <span id="freeCount"></span>
-      </div>
-    </div>
-
     <!-- Articles -->
     <div class="mx-auto max-w-6xl px-4 py-8">
       <!-- Hero post -->
@@ -121,37 +109,6 @@
         data-article-tag
       ></span>
     </template>
-
-    <!-- Paywall modal -->
-    <div id="paywall" class="hidden fixed inset-0 z-50">
-      <div class="absolute inset-0 bg-black/50"></div>
-      <div
-        class="relative mx-auto mt-24 w-full max-w-md bg-white rounded-2xl shadow-lg p-6"
-      >
-        <h3 class="text-xl font-bold">
-          You have reached your free article limit
-        </h3>
-        <p class="mt-2 text-gray-600">
-          Create an account to keep reading more articles. Unlock all features
-          and join our community of readers with a Premium plan.
-        </p>
-
-        <div class="mt-6 flex flex-col gap-3">
-          <button
-            id="subscribe"
-            class="rounded-lg bg-orange-500 hover:bg-orange-600 text-white px-4 py-2"
-          >
-            Continue with subscription
-          </button>
-          <button
-            id="closePaywall"
-            class="rounded-lg border border-gray-300 px-4 py-2"
-          >
-            Not now
-          </button>
-        </div>
-      </div>
-    </div>
 
     <!-- Reset demo link -->
     <p
