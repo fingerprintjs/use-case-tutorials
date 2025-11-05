@@ -55,6 +55,12 @@ app.get("/api/article/:id", async (req, reply) => {
   return reply.send(article);
 });
 
+// Get article (for final demo)
+app.post("/api/article/:id", async (req, reply) => {
+  const article = await getArticle(req.params.id);
+  return reply.send(article);
+});
+
 // Reset the demo
 app.get("/api/reset", async (_req, reply) => {
   resetDb();

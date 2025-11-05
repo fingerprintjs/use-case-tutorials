@@ -1,11 +1,13 @@
 import fs from "fs";
 
-export async function getArticle(id) {
+export async function getArticle(articleId) {
   const articles = JSON.parse(
     fs.readFileSync("./server/data/articles.json", "utf-8")
   );
-  const article = articles.find((article) => article.id === Number(id));
-  return article;
+  const article = articles.find((article) => article.id === Number(articleId));
+  if (!article) return { success: false, message: "Article not found" };
+
+  return { success: true, article };
 }
 
 // Get article summaries
