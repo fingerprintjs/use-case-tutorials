@@ -30,6 +30,19 @@ function updateFreeCount() {
   freeCountEl.textContent = text;
 }
 
+// Update articles read in local storage
+function updateArticlesRead() {
+  const articleId = window.location.pathname.split("/").pop();
+  const articlesRead = localStorage.getItem("articlesRead") || "[]";
+  const articlesReadArray = JSON.parse(articlesRead);
+  if (articlesReadArray.length >= FREE_ARTICLES_LIMIT) return;
+
+  const newArticlesReadArray = Array.from(
+    new Set([...articlesReadArray, articleId])
+  );
+  localStorage.setItem("articlesRead", JSON.stringify(newArticlesReadArray));
+}
+
 // Get the article content
 async function getArticle() {
   const articlesRead = getArticlesRead();
@@ -81,18 +94,6 @@ async function getArticle() {
     responseEl.classList.remove("hidden");
     articleEl.classList.add("hidden");
   }
-}
-
-function updateArticlesRead() {
-  const articleId = window.location.pathname.split("/").pop();
-  const articlesRead = localStorage.getItem("articlesRead") || "[]";
-  const articlesReadArray = JSON.parse(articlesRead);
-  if (articlesReadArray.length >= FREE_ARTICLES_LIMIT) return;
-
-  const newArticlesReadArray = Array.from(
-    new Set([...articlesReadArray, articleId])
-  );
-  localStorage.setItem("articlesRead", JSON.stringify(newArticlesReadArray));
 }
 
 // Reset demo
