@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Article</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/config.js"></script>
+    <script src="/article.js" defer></script>
+  </head>
+  <body class="bg-gray-50 text-gray-900">
+    <div class="border-b bg-white">
+      <div class="mx-auto max-w-3xl px-4 py-3 flex items-center gap-3">
+        <a href="/" class="text-sm text-gray-600 hover:underline">← Back</a>
+      </div>
+    </div>
+    <div
+      id="freeCounter"
+      class="w-full bg-orange-50 border-b border-orange-200"
+    >
+      <div
+        class="mx-auto max-w-6xl px-4 py-2 text-sm text-orange-700 flex items-center justify-center"
+      >
+        <span id="freeCount"></span>
+      </div>
+    </div>
+
+    <div id="response" class="hidden mx-auto max-w-3xl px-4 py-8 text-center">
+      <p class="text-gray-600" id="responseMessage"></p>
+    </div>
+
+    <div id="article" class="hidden mx-auto max-w-3xl px-4 py-8">
+      <!-- Hero image -->
+      <div id="hero" class="aspect-[16/9] w-full rounded-xl bg-orange-100">
+        <svg
+          viewBox="0 0 1600 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-full h-full object-cover"
+          aria-label="Hero post"
+        >
+          <image
+            id="heroImage"
+            href="/blog-image.svg"
+            width="1600"
+            height="900"
+          />
+        </svg>
+      </div>
+
+      <!-- Title -->
+      <h1 id="title" class="mt-6 text-3xl font-bold leading-tight">
+        <!-- filled later -->
+      </h1>
+
+      <!-- Meta -->
+      <div class="mt-3 flex items-center gap-3 text-sm text-gray-500">
+        <img class="w-6 h-6 rounded-full border" id="avatar" alt="Author" />
+        <span id="author"></span>
+        <span>•</span>
+        <time id="date"></time>
+      </div>
+
+      <!-- Content -->
+      <div id="content" class="prose prose-gray max-w-none mt-6">
+        <!-- skeleton while loading -->
+        <div class="space-y-3">
+          <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div class="h-4 bg-gray-200 rounded animate-pulse w-5/6"></div>
+          <div class="h-64 bg-gray-200 rounded animate-pulse"></div>
+          <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div class="h-4 bg-gray-200 rounded animate-pulse w-4/5"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset demo link -->
+    <p
+      id="resetLink"
+      class="text-center text-sm text-gray-400 hover:text-gray-600 mb-4 cursor-pointer"
+    >
+      Reset demo
+    </p>
+  </body>
+</html>

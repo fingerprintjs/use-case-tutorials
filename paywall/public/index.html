@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cybersecurity Today</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/config.js"></script>
+    <script src="/index.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 text-gray-900">
+    <!-- Articles -->
+    <div class="mx-auto max-w-6xl px-4 py-8">
+      <!-- Hero post -->
+      <div id="heroArticle" class="">
+        <!-- Hero article inserted here -->
+      </div>
+
+      <!-- Rest of articles -->
+      <div
+        id="articlesContainer"
+        class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <!-- Articles inserted here -->
+      </div>
+    </div>
+
+    <!-- Hero article template -->
+    <template id="heroArticleTmpl">
+      <a
+        data-article-link
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white rounded-2xl shadow p-4 md:p-6 hover:shadow-md transition-shadow"
+      >
+        <div
+          class="aspect-[4/3] rounded-xl bg-orange-100 flex items-center justify-center overflow-hidden"
+        >
+          <img
+            data-article-image
+            class="w-full h-auto aspect-[4/3] object-cover rounded-t-2xl bg-orange-100"
+          />
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center gap-2 text-sm text-gray-500">
+            <img
+              class="w-6 h-6 rounded-full border"
+              data-article-avatar
+              alt="Author"
+            />
+            <span class="font-medium" data-article-author></span>
+            <span>•</span>
+            <time datetime="2025-10-29" data-article-date></time>
+          </div>
+
+          <h1
+            class="text-3xl md:text-4xl font-bold leading-tight"
+            data-article-title
+          ></h1>
+
+          <p class="text-gray-600" data-article-summary></p>
+
+          <div class="flex flex-wrap gap-2" data-article-tags></div>
+        </div>
+      </a>
+    </template>
+
+    <!-- Article template -->
+    <template id="articleTmpl">
+      <a
+        class="bg-white rounded-2xl shadow hover:shadow-md transition-shadow"
+        data-article-link
+      >
+        <div
+          class="aspect-[4/3] rounded-t-2xl bg-orange-100 flex items-center justify-center"
+        >
+          <img
+            data-article-image
+            class="w-full h-auto aspect-[4/3] object-cover rounded-t-2xl bg-orange-100"
+          />
+        </div>
+
+        <div class="p-4 flex flex-col gap-3">
+          <div class="flex items-center gap-2 text-xs text-gray-500">
+            <img
+              class="w-5 h-5 rounded-full border"
+              data-article-avatar
+              alt="Author"
+            />
+            <span class="font-medium" data-article-author></span>
+            <span>•</span>
+            <time data-article-date datetime=""></time>
+          </div>
+
+          <h2 class="font-semibold leading-snug" data-article-title></h2>
+
+          <p class="text-sm text-gray-600" data-article-summary></p>
+
+          <div class="flex flex-wrap gap-2 mt-auto" data-article-tags></div>
+        </div>
+      </a>
+    </template>
+
+    <!-- Article tags template -->
+    <template id="articleTagsTmpl">
+      <span
+        class="px-2 py-1 rounded-full bg-gray-100 text-gray-700 text-xs"
+        data-article-tag
+      ></span>
+    </template>
+
+    <!-- Reset demo link -->
+    <p
+      id="resetLink"
+      class="text-center text-sm text-gray-400 hover:text-gray-600 mb-4 cursor-pointer"
+    >
+      Reset demo
+    </p>
+  </body>
+</html>
