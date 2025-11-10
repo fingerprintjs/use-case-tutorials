@@ -1,0 +1,25 @@
+{
+  "name": "fingerprint-account-sharing-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "dev": "node --watch server/server.js",
+    "start": "node server/server.js",
+    "reset-db": "node -e \"import('./server/db.js').then(m => m.resetDb())\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@fastify/static": "^8.2.0",
+    "@fingerprintjs/fingerprintjs-pro-server-api": "^6.8.0",
+    "better-sqlite3": "^12.2.0",
+    "dotenv": "^17.2.1",
+    "fastify": "^5.5.0"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.26.1"
+  }
+}
