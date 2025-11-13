@@ -1,11 +1,12 @@
 {
-  "name": "fingerprint-web-scraping-tutorial",
+  "name": "fingerprint-regional-pricing-tutorial",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
   "scripts": {
     "dev": "node --watch server/server.js",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "reset-db": "node -e \"import('./server/db.js').then(m => m.resetDb())\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,6 @@
     "fastify": "^5.5.0"
   },
   "devDependencies": {
-    "puppeteer": "^24.19.0"
+    "puppeteer": "^24.26.1"
   }
 }

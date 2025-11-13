@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout • Credit Kart Racers</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <script src="index.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-xl">
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
+        <h1 class="text-center text-2xl font-semibold text-gray-900 mb-6">
+          Credit Kart Racers
+        </h1>
+
+        <div class="flex items-start gap-4">
+          <img
+            src="/cover.png"
+            alt="Game cover art"
+            class="h-16 w-16 rounded-md object-cover border border-gray-200"
+          />
+          <div class="flex-1">
+            <p class="font-medium text-gray-900">Fingerprint Games Studio</p>
+            <p class="text-sm text-gray-500">
+              PC • Digital download • Global key
+            </p>
+          </div>
+
+          <div class="text-right">
+            <p id="priceBase" class="text-gray-900 font-semibold"></p>
+          </div>
+        </div>
+
+        <hr class="my-6 border-gray-200" />
+
+        <!-- Totals -->
+        <div class="space-y-2">
+          <!-- Regional discount (hidden until applied) -->
+          <div
+            id="discountRow"
+            class="hidden flex justify-between text-sm rounded-md border border-dashed border-orange-300 bg-orange-50 px-3 py-2"
+          >
+            <span class="text-orange-700">Regional discount</span>
+            <span id="discountAmount" class="text-orange-700"></span>
+          </div>
+
+          <div class="flex justify-between text-sm px-3">
+            <span class="text-gray-600">Subtotal</span>
+            <span id="subtotal" class="text-gray-900"></span>
+          </div>
+
+          <div class="flex justify-between text-sm px-3">
+            <span class="text-gray-600">Taxes</span>
+            <span id="taxes" class="text-gray-900"></span>
+          </div>
+
+          <div class="flex justify-between text-base font-semibold pt-2 px-3">
+            <span class="text-gray-900">Total</span>
+            <span id="total" class="text-gray-900"></span>
+          </div>
+        </div>
+
+        <!-- Regional pricing banner -->
+        <div
+          id="regionBanner"
+          class="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4"
+        >
+          <p class="text-sm text-gray-600">
+            Activate regional pricing if available for your location.
+          </p>
+
+          <!-- Result / alert box -->
+          <div
+            id="resultBox"
+            class="hidden mt-4 text-sm px-4 py-3 rounded-md border flex justify-between items-start gap-2"
+          >
+            <span id="resultMessage"></span>
+            <button id="clearResult" type="button" aria-label="Close message">
+              &times;
+            </button>
+          </div>
+
+          <button
+            id="activateRegionalBtn"
+            type="button"
+            class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md py-2 transition"
+          >
+            Activate local discount
+          </button>
+        </div>
+
+        <!-- Confirm -->
+        <button
+          id="confirmBtn"
+          type="button"
+          class="mt-6 w-full bg-gray-900 text-white font-medium rounded-md py-2"
+        >
+          Confirm purchase
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
