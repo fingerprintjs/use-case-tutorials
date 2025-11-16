@@ -1,11 +1,9 @@
 // Initialize the Fingerprint client agent
+// Change region to match your workspace region
+// (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
   `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then(
-  // Change region to match your workspace region
-  // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
-  (FingerprintJS) => FingerprintJS.load({ region: "us" })
-);
+).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
 
 // --- DOM refs ---
 const emailInput = document.getElementById("emailInput");
