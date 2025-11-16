@@ -4,6 +4,7 @@ export async function submitSurvey(body) {
   const { email } = body;
 
   if (checkForDuplicateSubmission(email)) {
+    console.error("Duplicate survey submission detected.");
     return { success: false, message: "Duplicate survey submission." };
   }
 

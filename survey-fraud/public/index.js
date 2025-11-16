@@ -40,11 +40,7 @@ submitBtn.addEventListener("click", async () => {
   };
 
   if (!data.firstName || !data.email || !data.q1 || !data.q2 || !data.q3) {
-    showResult(
-      false,
-      "Please fill out all required fields before submitting." +
-        JSON.stringify(data)
-    );
+    showResult(false, "Please fill out all required fields before submitting.");
     return;
   }
 
