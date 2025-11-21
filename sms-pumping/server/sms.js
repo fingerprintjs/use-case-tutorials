@@ -1,3 +1,5 @@
+import { db } from "./db.js";
+
 export async function sendSMS(body) {
   const { name, phone } = body;
 
