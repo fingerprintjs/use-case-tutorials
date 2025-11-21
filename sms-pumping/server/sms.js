@@ -1,8 +1,6 @@
 import { db } from "./db.js";
 
-export async function sendSMS(body) {
-  const { name, phone } = body;
-
+export async function sendSMS({ name, phone }) {
   if (!name || !phone) {
     return { success: false, message: "Name and phone number are required." };
   }
