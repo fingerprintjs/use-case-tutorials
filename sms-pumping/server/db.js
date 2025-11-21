@@ -7,9 +7,8 @@ export function initDb() {
   db.exec(`
     CREATE TABLE IF NOT EXISTS sms_codes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
+      visitorId TEXT,
       phone TEXT NOT NULL,
-      visitorId TEXT NOT NULL,
       code TEXT NOT NULL,
       createdAt INTEGER NOT NULL,
       expiresAt INTEGER NOT NULL
