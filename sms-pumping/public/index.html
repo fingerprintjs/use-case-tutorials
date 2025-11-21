@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create account</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <script src="index.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-md">
+      <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
+        <h1 class="text-2xl font-semibold text-gray-900">Create account</h1>
+
+        <div class="mt-6 space-y-4">
+          <!-- Email -->
+          <div>
+            <label
+              for="nameInput"
+              class="block text-sm font-medium text-gray-800 mb-1"
+            >
+              Name
+            </label>
+            <input
+              id="nameInput"
+              type="text"
+              placeholder="Jamie"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label
+              for="phoneInput"
+              class="block text-sm font-medium text-gray-800 mb-1"
+            >
+              Phone number
+            </label>
+            <p class="text-xs text-gray-500 mb-1">
+              Use an international format without spaces, like +1234567890.
+            </p>
+            <input
+              id="phoneInput"
+              type="text"
+              placeholder="+1234567890"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+          </div>
+
+          <!-- Submit -->
+          <button
+            id="submitBtn"
+            type="button"
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md py-2 transition"
+          >
+            Send code via SMS
+          </button>
+
+          <!-- Result message -->
+          <div
+            id="resultBox"
+            class="hidden mt-2 text-sm px-4 py-2 rounded flex justify-between items-center"
+          >
+            <span id="resultMessage"></span>
+            <button id="clearResult" type="button" aria-label="Close message">
+              &times;
+            </button>
+          </div>
+
+          <!-- SMS Code input -->
+          <div>
+            <label
+              for="smsCodeInput"
+              class="block text-sm font-medium text-gray-800 mb-1"
+            >
+              SMS code
+            </label>
+            <p class="text-xs text-gray-500 mb-1">
+              Enter the code you received via SMS.
+            </p>
+            <input
+              id="smsCodeInput"
+              type="text"
+              placeholder="123456"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+          </div>
+
+          <!-- Submit -->
+          <button
+            id="submitCodeBtn"
+            type="button"
+            class="w-full bg-gray-900 hover:bg-gray-700 text-white font-medium rounded-md py-2 transition"
+          >
+            Verify code
+          </button>
+        </div>
+      </div>
+
+      <!-- Reset DB link -->
+      <p
+        id="resetDBLink"
+        class="text-center text-sm text-gray-400 hover:text-gray-600 mt-4 cursor-pointer"
+      >
+        Reset demo DB
+      </p>
+    </div>
+  </body>
+</html>

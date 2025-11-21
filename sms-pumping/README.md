@@ -1,6 +1,6 @@
-# Fingerprint Card Testing Prevention Tutorial
+# Fingerprint SMS Pumping Prevention Tutorial
 
-This use case tutorial shows how to stop card testing and cracking using Fingerprint.
+This use case tutorial shows how to prevent SMS pumping abuse using Fingerprint.
 
 ## Setup
 
@@ -21,7 +21,7 @@ npm run dev
 
 ### Running the bot test
 
-This repo includes a simple Puppeteer script to simulate a headless bot card testing attempt. To run it, use the following command while the server is running:
+This repo includes a simple Puppeteer script to simulate a headless bot attempting to abuse the SMS verification. To run it, use the following command while the server is running:
 
 ```bash
 node test-bot.js
@@ -31,7 +31,7 @@ The request will be rejected by the Bot Detection Smart Signal.
 
 ## Resetting the demo database
 
-To clear all card testing attempts and reset the demo database:
+To clear all SMS codes sent and reset the demo database:
 
 - Click **Reset demo DB** at the bottom of the demo app page, or
 - Run this from the terminal:

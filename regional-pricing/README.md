@@ -1,4 +1,4 @@
-# Fingerprint Regional Pricing Tutorial
+# Fingerprint Regional Pricing Enforcement Tutorial
 
 This use case tutorial shows how to enforce regional pricing using Fingerprint and stop VPN-based attempts to claim pricing meant for other regions.
 
