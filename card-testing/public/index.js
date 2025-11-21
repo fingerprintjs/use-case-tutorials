@@ -1,14 +1,13 @@
-// --- DOM refs ---
-const usernameInput = document.getElementById("usernameInput");
-const passwordInput = document.getElementById("passwordInput");
-const signupBtn = document.getElementById("signupBtn");
+// DOM Elements
+const cardNumberEl = document.getElementById("cardNumber");
+const cardExpEl = document.getElementById("cardExp");
+const cardCvvEl = document.getElementById("cardCvv");
+const placeOrderBtn = document.getElementById("placeOrderBtn");
 const resultBox = document.getElementById("resultBox");
 const resultMsg = document.getElementById("resultMessage");
-const resultIcon = document.getElementById("resultIcon");
 const clearBtn = document.getElementById("clearResult");
 const resetLink = document.getElementById("resetDBLink");
 
-// --- Helpers ---
 // Show result message
 function showResult(success, message) {
   resultMsg.textContent = (success ? "✅ " : "⚠️ ") + message;
@@ -19,41 +18,46 @@ function showResult(success, message) {
   resultBox.classList.toggle("text-green-800", success);
 }
 
-// --- Events ---
-signupBtn.addEventListener("click", async () => {
-  const username = (usernameInput.value || "").trim();
-  const password = passwordInput.value || "";
+// Place order
+placeOrderBtn.addEventListener("click", async () => {
+  const recipientEmail = "jamiedoe@example.com";
+  const amount = 5.0;
+  const cardNumber = cardNumberEl.value.trim();
+  const cardExp = cardExpEl.value.trim();
+  const cardCvv = cardCvvEl.value.trim();
 
-  if (!username || !password) {
-    showResult(false, "Please enter your username and password.");
+  if (!cardNumber || !cardExp || !cardCvv) {
+    showResult(false, "Missing payment details.");
     return;
   }
 
   try {
-    const res = await fetch("/api/signup", {
+    const res = await fetch("/api/place-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({
+        recipientEmail,
+        amount,
+        cardNumber,
+        cardExp,
+        cardCvv,
+      }),
     });
 
     const data = await res.json();
-
-    if (!data.success) {
-      showResult(false, data.error || "Sign up failed.");
-      return;
-    }
-
-    showResult(true, "Signed up successfully.");
+    showResult(data.success, data.message);
   } catch (err) {
-    console.error("Sign up request failed:", err);
-    showResult(false, "Something went wrong. Try again.");
+    console.error("Order failed:", err);
+    showResult(false, "Something went wrong.");
   }
 });
 
+// Clear result message
 clearBtn?.addEventListener("click", () => {
   resultBox.classList.add("hidden");
 });
 
+// Reset database
 resetLink?.addEventListener("click", async () => {
   try {
     await fetch("/api/reset-db");
