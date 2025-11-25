@@ -50,8 +50,8 @@ app.get("/api/listings", (_req, reply) => {
 });
 
 // Post new listing
-app.post("/api/listings", (req, reply) => {
-  const result = postListing(req.body);
+app.post("/api/listings", async (req, reply) => {
+  const result = await postListing(req.body);
   return reply.send(result);
 });
 
@@ -63,8 +63,8 @@ app.delete("/api/listings/:id", (req, reply) => {
 
 // Ban seller
 app.post("/api/ban-seller", (req, reply) => {
-  const { sellerEmail } = req.body;
-  const result = banSeller(sellerEmail);
+  const { listingId } = req.body;
+  const result = banSeller(listingId);
   return reply.send(result);
 });
 

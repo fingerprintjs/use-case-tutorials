@@ -1,6 +1,6 @@
 import { db } from "./db.js";
 
-export function postListing(body) {
+export async function postListing(body) {
   const { sellerEmail } = body;
   if (isSellerBanned(sellerEmail)) {
     console.error("Seller is banned:", sellerEmail);
@@ -24,12 +24,24 @@ export function removeListing(id) {
   }
 }
 
-export function banSeller(sellerEmail) {
+export function banSeller(listingId) {
   const bannedAt = Date.now();
   try {
+    const listing = db
+      .prepare("SELECT sellerEmail FROM listings WHERE id = ?")
+      .get(listingId);
+
+    if (!listing) {
+      console.error("Listing not found.");
+      return { success: false, message: "Listing not found." };
+    }
+
+    const sellerEmail = listing.sellerEmail;
+
     db.prepare(
       "INSERT INTO banned_visitors (email, bannedAt) VALUES (?, ?)"
     ).run(sellerEmail, bannedAt);
+
     return { success: true, message: "Seller banned successfully." };
   } catch (err) {
     console.error("Failed to ban seller:", err);

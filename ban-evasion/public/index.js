@@ -2,6 +2,7 @@
 const listingsContainer = document.getElementById("listings");
 const listingTmpl = document.getElementById("listingTmpl");
 const adminToggle = document.getElementById("adminToggle");
+const listingForm = document.getElementById("listingForm");
 const eventNameInput = document.getElementById("eventNameInput");
 const dateInput = document.getElementById("dateInput");
 const venueInput = document.getElementById("venueInput");
@@ -70,16 +71,13 @@ function attachAdminHandlers() {
     const listingEl = btn.closest("[data-listing-id]");
     if (!listingEl) return;
     const listingId = listingEl.dataset.listingId;
-    const sellerEmail = listingEl.querySelector(
-      "[data-seller-email]"
-    ).textContent;
 
     if (action === "remove") {
       await handleRemoveListing(listingId, listingEl);
     }
 
     if (action === "ban") {
-      await handleBanSeller(sellerEmail);
+      await handleBanSeller(listingId);
     }
   });
 }
@@ -100,12 +98,12 @@ async function handleRemoveListing(listingId, listingEl) {
 }
 
 // Ban seller and remove their listing
-async function handleBanSeller(sellerEmail) {
+async function handleBanSeller(listingId) {
   try {
     const res = await fetch(`/api/ban-seller`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sellerEmail }),
+      body: JSON.stringify({ listingId }),
     });
     const data = await res.json();
     showResult(data.success, data.message);
@@ -165,6 +163,8 @@ submitBtn.addEventListener("click", async () => {
 // Toggle admin mode
 adminToggle.addEventListener("click", () => {
   adminModeEnabled = !adminModeEnabled;
+
+  listingForm.classList.toggle("hidden", adminModeEnabled);
 
   const controls = document.querySelectorAll(".admin-controls");
   for (const el of controls) {
