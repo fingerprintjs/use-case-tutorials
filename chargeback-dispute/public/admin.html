@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin • Fingerprint Tickets</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <script src="admin.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+      <!-- Top bar -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">
+            Fingerprint Tickets
+          </h1>
+          <p class="text-sm text-gray-600">
+            Signed in as
+            <span class="font-medium">admin</span>
+          </p>
+        </div>
+
+        <div class="text-right">
+          <a
+            href="/"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 border border-orange-300 hover:border-orange-400 rounded-full px-4 py-1 bg-white hover:bg-orange-50"
+          >
+            Shopper view
+            <span class="text-orange-500">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Chargebacks Section -->
+      <div class="space-y-3">
+        <h2 class="text-lg font-semibold text-gray-900">Chargebacks</h2>
+        <div id="chargebacksList" class="space-y-4">
+          <!-- Chargebacks will be populated here -->
+        </div>
+        <p
+          id="noChargebacks"
+          class="text-gray-500 text-center py-4"
+          style="display: none"
+        >
+          No chargebacks found.
+        </p>
+      </div>
+
+      <!-- All Purchases Section -->
+      <div class="space-y-3">
+        <h2 class="text-lg font-semibold text-gray-900">All purchases</h2>
+        <div id="purchasesList" class="space-y-4">
+          <!-- Purchases will be populated here -->
+        </div>
+        <p
+          id="noPurchases"
+          class="text-gray-500 text-center py-4"
+          style="display: none"
+        >
+          No purchases found.
+        </p>
+      </div>
+    </div>
+
+    <!-- Purchase Card Template -->
+    <template id="purchaseCardTemplate">
+      <div
+        class="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        data-purchase-id=""
+      >
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900" data-event-name>
+              Event Name
+            </h3>
+            <div class="mt-2 space-y-1">
+              <p class="text-sm text-gray-600">
+                <span data-ticket-quantity>1</span> ticket(s)
+              </p>
+              <p class="text-sm text-gray-600">
+                Total: <span class="font-semibold" data-price>$0.00</span>
+              </p>
+              <p class="text-sm text-gray-500" data-purchase-date>
+                Purchased on Date
+              </p>
+              <p class="text-sm text-gray-500">
+                Buyer:
+                <span class="font-medium" data-buyer-email
+                  >email@example.com</span
+                >
+              </p>
+              <p class="text-sm text-gray-500">
+                Card: <span data-credit-card>•••• •••• •••• 4242</span>
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="ml-4 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-md transition-colors"
+            data-action="view-history"
+          >
+            View history
+          </button>
+        </div>
+      </div>
+    </template>
+
+    <!-- History Table Row Template -->
+    <template id="historyRowTemplate">
+      <tr>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
+          data-event-name
+        >
+          Event Name
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-purchase-date
+        >
+          Date
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-email
+        >
+          Email
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-visitor-id
+        >
+          Visitor ID
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-ticket-quantity
+        >
+          Quantity
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm font-semibold text-gray-900"
+          data-total
+        >
+          $0.00
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-credit-card
+        >
+          Card
+        </td>
+        <td class="px-4 py-3 whitespace-nowrap text-sm" data-status>Status</td>
+      </tr>
+    </template>
+
+    <!-- History State Message Template -->
+    <template id="historyStateTemplate">
+      <tr>
+        <td
+          colspan="8"
+          class="px-4 py-4 text-center text-gray-500"
+          data-message
+        >
+          Message
+        </td>
+      </tr>
+    </template>
+
+    <!-- Purchase History Modal -->
+    <div
+      id="historyModal"
+      class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+    >
+      <div
+        class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+      >
+        <!-- Modal Header -->
+        <div class="p-6 border-b border-gray-200">
+          <div class="flex items-center justify-between">
+            <h2
+              class="text-xl font-semibold text-gray-900"
+              id="historyModalTitle"
+            >
+              Purchase History
+            </h2>
+            <button
+              type="button"
+              class="text-gray-400 hover:text-gray-600"
+              id="historyModalClose"
+            >
+              <span class="sr-only">Close</span>
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Event
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Date
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Email
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Visitor ID
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Tickets
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Total
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Card
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="historyTableBody"
+                class="bg-white divide-y divide-gray-200"
+              >
+                <!-- History rows will be populated here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-6 border-t border-gray-200 bg-gray-50">
+          <button
+            type="button"
+            id="exportCsvButton"
+            class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-md transition-colors"
+          >
+            Export CSV
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

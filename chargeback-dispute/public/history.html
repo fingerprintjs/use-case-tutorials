@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order History • Fingerprint Tickets</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <script src="history.js" defer></script>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+      <!-- Top bar -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">
+            Fingerprint Tickets
+          </h1>
+          <div class="flex items-center gap-3">
+            <p class="text-sm text-gray-600">
+              Signed in as
+              <span class="font-medium">jamie@example.com</span>
+            </p>
+            <span class="text-gray-300">•</span>
+            <a
+              href="/"
+              class="text-sm text-gray-600 hover:text-gray-900 underline"
+            >
+              Events
+            </a>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <a
+            href="/admin"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 border border-orange-300 hover:border-orange-400 rounded-full px-4 py-1 bg-white hover:bg-orange-50"
+          >
+            Merchant view
+            <span class="text-orange-500">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Result message -->
+      <div
+        id="resultBox"
+        class="hidden mt-4 text-sm px-4 py-2 rounded flex justify-between items-center"
+      >
+        <span id="resultMessage"></span>
+        <button id="clearResult" type="button" aria-label="Close message">
+          &times;
+        </button>
+      </div>
+
+      <!-- Order History -->
+      <div class="space-y-3">
+        <h2 class="text-lg font-semibold text-gray-900">Order history</h2>
+        <div id="ordersList" class="space-y-4">
+          <!-- Orders will be populated here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Card Template -->
+    <template id="orderCardTemplate">
+      <div
+        class="bg-white rounded-xl border border-gray-200 shadow-sm p-6"
+        data-purchase-id=""
+      >
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900" data-event-name>
+              Event Name
+            </h3>
+            <div class="mt-2 space-y-1">
+              <p class="text-sm text-gray-600">
+                <span data-ticket-quantity>1</span> ticket(s)
+              </p>
+              <p class="text-sm text-gray-600">
+                Total: <span class="font-semibold" data-price>$0.00</span>
+              </p>
+              <p class="text-sm text-gray-500" data-purchase-date>
+                Purchased on Date
+              </p>
+              <p
+                class="text-sm font-medium text-red-600 mt-2"
+                data-chargeback-status
+                style="display: none"
+              >
+                Chargeback initiated
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="ml-4 px-4 py-2 border border-orange-300 text-orange-600 hover:bg-orange-50 text-sm font-medium rounded-md transition-colors"
+            data-action="chargeback"
+          >
+            Simulate chargeback
+          </button>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>
