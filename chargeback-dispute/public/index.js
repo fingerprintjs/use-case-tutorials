@@ -163,10 +163,11 @@ clearBtn?.addEventListener("click", () => {
 resetLink.addEventListener("click", async () => {
   try {
     await fetch("/api/reset-db");
-    showResult(true, "Demo database reset. Refresh!");
+    alert("Demo database reset. Refreshing page...");
+    window.location.reload();
   } catch (err) {
     console.error("Failed to reset DB:", err);
-    showResult(false, "Failed to reset demo DB.");
+    alert("Failed to reset demo DB.");
   }
 });
 

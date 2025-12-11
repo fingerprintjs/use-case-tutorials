@@ -11,6 +11,7 @@ const historyTableBody = document.getElementById("historyTableBody");
 const exportCsvButton = document.getElementById("exportCsvButton");
 const historyRowTmpl = document.getElementById("historyRowTemplate");
 const historyStateTmpl = document.getElementById("historyStateTemplate");
+const resetLink = document.getElementById("reset");
 
 // Store current purchase history for export
 let currentPurchaseHistory = [];
@@ -156,7 +157,9 @@ function showHistoryState(message, isError = false) {
 // Open history modal and load purchases for email
 async function openHistoryModal(purchaseId) {
   try {
-    historyModalTitle.textContent = `Purchase History linked to order ${purchaseId}`;
+    historyModalTitle.textContent = `Purchase History linked to order #${
+      100000 + purchaseId
+    }`;
     showHistoryState("Loading...");
     historyModal.classList.remove("hidden");
 
@@ -256,6 +259,18 @@ historyModal.addEventListener("click", (e) => {
   }
 });
 exportCsvButton.addEventListener("click", exportToCsv);
+
+// Reset demo database
+resetLink.addEventListener("click", async () => {
+  try {
+    await fetch("/api/reset-db");
+    alert("Demo database reset. Refreshing page...");
+    window.location.reload();
+  } catch (err) {
+    console.error("Failed to reset DB:", err);
+    alert("Failed to reset demo DB.");
+  }
+});
 
 // Load purchases on page load
 loadPurchases();

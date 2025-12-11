@@ -4,6 +4,7 @@ const orderTmpl = document.getElementById("orderCardTemplate");
 const resultBox = document.getElementById("resultBox");
 const resultMsg = document.getElementById("resultMessage");
 const clearBtn = document.getElementById("clearResult");
+const resetLink = document.getElementById("reset");
 
 // Show result message
 function showResult(success, message) {
@@ -136,6 +137,18 @@ async function handleChargeback(purchaseId, orderEl) {
 // Clear result message
 clearBtn?.addEventListener("click", () => {
   resultBox.classList.add("hidden");
+});
+
+// Reset demo database
+resetLink.addEventListener("click", async () => {
+  try {
+    await fetch("/api/reset-db");
+    alert("Demo database reset. Refreshing page...");
+    window.location.reload();
+  } catch (err) {
+    console.error("Failed to reset DB:", err);
+    alert("Failed to reset demo DB.");
+  }
 });
 
 // Load orders on page load
