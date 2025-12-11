@@ -1,5 +1,105 @@
 import { db } from "./db.js";
 
+export async function postPurchase(body) {
+  const createdAt = Date.now();
+
+  try {
+    db.prepare(
+      "INSERT INTO purchases (eventName, ticketQuantity, price, creditCard, deliveryEmail, createdAt) VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @createdAt)"
+    ).run({ ...body, createdAt });
+    return { success: true, message: "Purchase completed successfully." };
+  } catch (err) {
+    console.error("Failed to save purchase:", err);
+    return {
+      success: false,
+      message: "Failed to save purchase: " + err.message,
+    };
+  }
+}
+
+export function getUserPurchases(email) {
+  try {
+    const purchases = db
+      .prepare(
+        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases WHERE deliveryEmail = ?"
+      )
+      .all(email);
+    return { success: true, purchases };
+  } catch (err) {
+    console.error("Failed to get user purchases:", err);
+    return {
+      success: false,
+      message: "Failed to get user purchases: " + err.message,
+    };
+  }
+}
+
+export function getRelatedPurchases(orderId) {
+  try {
+    const purchase = db
+      .prepare("SELECT deliveryEmail FROM purchases WHERE id = ?")
+      .get(orderId);
+
+    if (!purchase) {
+      return {
+        success: false,
+        message: "No purchase found for the given order ID.",
+      };
+    }
+
+    const { deliveryEmail } = purchase;
+
+    const purchases = db
+      .prepare(
+        `SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt
+        FROM purchases
+        WHERE deliveryEmail = ?
+        ORDER BY createdAt DESC`
+      )
+      .all(deliveryEmail);
+
+    return { success: true, purchases };
+  } catch (err) {
+    console.error("Failed to get purchases:", err);
+    return {
+      success: false,
+      message: "Failed to get purchases: " + err.message,
+    };
+  }
+}
+
+export function getAllPurchases() {
+  try {
+    const purchases = db
+      .prepare(
+        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases ORDER BY createdAt DESC"
+      )
+      .all();
+    return { success: true, purchases };
+  } catch (err) {
+    console.error("Failed to get all purchases:", err);
+    return {
+      success: false,
+      message: "Failed to get all purchases: " + err.message,
+    };
+  }
+}
+
+export function disputePurchase(purchaseId) {
+  try {
+    db.prepare("UPDATE purchases SET chargeback = 1 WHERE id = ?").run(
+      purchaseId
+    );
+    return { success: true, message: "Chargeback initiated successfully." };
+  } catch (err) {
+    console.error("Failed to dispute purchase:", err);
+    return {
+      success: false,
+      message: "Failed to dispute purchase: " + err.message,
+    };
+  }
+}
+
 export function getEvents() {
   const events = [
     {
@@ -89,70 +189,4 @@ export function getEvents() {
   ];
 
   return { success: true, events };
-}
-
-export function postPurchase(body) {
-  const createdAt = Date.now();
-  console.log(body);
-  try {
-    db.prepare(
-      "INSERT INTO purchases (eventName, ticketQuantity, price, creditCard, deliveryEmail, createdAt) VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @createdAt)"
-    ).run({ ...body, createdAt });
-    return { success: true, message: "Purchase completed successfully." };
-  } catch (err) {
-    console.error("Failed to save purchase:", err);
-    return {
-      success: false,
-      message: "Failed to save purchase: " + err.message,
-    };
-  }
-}
-
-export function getPurchases(email) {
-  try {
-    const purchases = db
-      .prepare(
-        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases WHERE deliveryEmail = ? ORDER BY createdAt DESC"
-      )
-      .all(email);
-    return { success: true, purchases };
-  } catch (err) {
-    console.error("Failed to get purchases:", err);
-    return {
-      success: false,
-      message: "Failed to get purchases: " + err.message,
-    };
-  }
-}
-
-export function getAllPurchases() {
-  try {
-    const purchases = db
-      .prepare(
-        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases ORDER BY createdAt DESC"
-      )
-      .all();
-    return { success: true, purchases };
-  } catch (err) {
-    console.error("Failed to get all purchases:", err);
-    return {
-      success: false,
-      message: "Failed to get all purchases: " + err.message,
-    };
-  }
-}
-
-export function disputePurchase(purchaseId) {
-  try {
-    db.prepare("UPDATE purchases SET chargeback = 1 WHERE id = ?").run(
-      purchaseId
-    );
-    return { success: true, message: "Chargeback initiated successfully." };
-  } catch (err) {
-    console.error("Failed to dispute purchase:", err);
-    return {
-      success: false,
-      message: "Failed to dispute purchase: " + err.message,
-    };
-  }
 }

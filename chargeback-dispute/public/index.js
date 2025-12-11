@@ -83,11 +83,9 @@ function closePurchaseModal() {
   // Reset form inputs to defaults
   const ticketQuantity = document.getElementById("ticketQuantity");
   const creditCard = document.getElementById("creditCard");
-  const deliveryEmail = document.getElementById("deliveryEmail");
 
   if (ticketQuantity) ticketQuantity.value = "1";
   if (creditCard) creditCard.value = "card1";
-  if (deliveryEmail) deliveryEmail.value = "jamie@example.com";
 }
 
 // Modal event handlers
@@ -154,10 +152,11 @@ clearBtn?.addEventListener("click", () => {
 resetLink.addEventListener("click", async () => {
   try {
     await fetch("/api/reset-db");
-    showResult(true, "Demo database reset. Refresh!");
+    alert("Demo database reset. Refreshing page...");
+    window.location.reload();
   } catch (err) {
     console.error("Failed to reset DB:", err);
-    showResult(false, "Failed to reset demo DB.");
+    alert("Failed to reset demo DB.");
   }
 });
 

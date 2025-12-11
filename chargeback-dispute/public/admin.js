@@ -9,10 +9,12 @@ const historyModalTitle = document.getElementById("historyModalTitle");
 const historyModalClose = document.getElementById("historyModalClose");
 const historyTableBody = document.getElementById("historyTableBody");
 const exportCsvButton = document.getElementById("exportCsvButton");
+const historyRowTmpl = document.getElementById("historyRowTemplate");
+const historyStateTmpl = document.getElementById("historyStateTemplate");
+const resetLink = document.getElementById("reset");
 
 // Store current purchase history for export
 let currentPurchaseHistory = [];
-let currentHistoryEmail = "";
 
 // Format date
 function formatDate(timestamp) {
@@ -48,9 +50,7 @@ function createPurchaseCard(purchase) {
   const viewHistoryBtn = purchaseEl.querySelector(
     "[data-action='view-history']"
   );
-  viewHistoryBtn.addEventListener("click", () =>
-    openHistoryModal(purchase.deliveryEmail)
-  );
+  viewHistoryBtn.addEventListener("click", () => openHistoryModal(purchase.id));
 
   return purchaseEl;
 }
@@ -101,69 +101,91 @@ async function loadPurchases() {
   }
 }
 
-// Open history modal and load purchases for email
-async function openHistoryModal(email) {
-  try {
-    historyModalTitle.textContent = `Purchase History - ${email}`;
-    historyTableBody.innerHTML =
-      '<tr><td colspan="6" class="px-4 py-4 text-center text-gray-500">Loading...</td></tr>';
+// Create history table row from template
+function createHistoryRow(purchase) {
+  const clone = historyRowTmpl.content.cloneNode(true);
+  const row = clone.querySelector("tr");
+  const total = purchase.price * purchase.ticketQuantity;
+  const purchaseDate = formatDate(purchase.createdAt);
 
+  // Set row background for chargebacks
+  if (purchase.chargeback === 1) {
+    row.classList.add("bg-red-50");
+  }
+
+  // Populate row data
+  row.querySelector("[data-event-name]").textContent = purchase.eventName;
+  row.querySelector("[data-purchase-date]").textContent = purchaseDate;
+  row.querySelector("[data-email]").textContent = purchase.deliveryEmail || "";
+  row.querySelector("[data-ticket-quantity]").textContent =
+    purchase.ticketQuantity;
+  row.querySelector("[data-total]").textContent = `$${total.toFixed(2)}`;
+  row.querySelector("[data-credit-card]").textContent = purchase.creditCard;
+
+  // Set status badge
+  const statusCell = row.querySelector("[data-status]");
+  const statusBadge = document.createElement("span");
+  if (purchase.chargeback === 1) {
+    statusBadge.className =
+      "px-2 py-1 text-xs font-medium text-red-800 bg-red-100 rounded";
+    statusBadge.textContent = "Chargeback";
+  } else {
+    statusBadge.className =
+      "px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 rounded";
+    statusBadge.textContent = "Completed";
+  }
+  statusCell.textContent = "";
+  statusCell.appendChild(statusBadge);
+
+  return row;
+}
+
+// Show state message in history table
+function showHistoryState(message, isError = false) {
+  const clone = historyStateTmpl.content.cloneNode(true);
+  const cell = clone.querySelector("[data-message]");
+  cell.textContent = message;
+  if (isError) {
+    cell.classList.remove("text-gray-500");
+    cell.classList.add("text-red-500");
+  }
+  historyTableBody.innerHTML = "";
+  historyTableBody.appendChild(clone);
+}
+
+// Open history modal and load purchases for email
+async function openHistoryModal(purchaseId) {
+  try {
+    historyModalTitle.textContent = `Purchase History linked to order #${
+      100000 + purchaseId
+    }`;
+    showHistoryState("Loading...");
     historyModal.classList.remove("hidden");
 
-    const res = await fetch(
-      `/api/purchases?email=${encodeURIComponent(email)}`
-    );
+    const res = await fetch(`/api/purchases/${purchaseId}/related`);
     const data = await res.json();
 
     if (!data.success) {
-      historyTableBody.innerHTML =
-        '<tr><td colspan="6" class="px-4 py-4 text-center text-red-500">Failed to load history.</td></tr>';
+      showHistoryState("Failed to load history.", true);
       return;
     }
 
     const purchases = data.purchases;
     currentPurchaseHistory = purchases;
-    currentHistoryEmail = email;
     historyTableBody.innerHTML = "";
 
     if (purchases.length === 0) {
-      historyTableBody.innerHTML =
-        '<tr><td colspan="6" class="px-4 py-4 text-center text-gray-500">No purchases found.</td></tr>';
+      showHistoryState("No purchases found.");
       return;
     }
 
     purchases.forEach((purchase) => {
-      const row = document.createElement("tr");
-      const total = purchase.price * purchase.ticketQuantity;
-      const purchaseDate = formatDate(purchase.createdAt);
-      const chargebackStatus =
-        purchase.chargeback === 1
-          ? '<span class="px-2 py-1 text-xs font-medium text-red-800 bg-red-100 rounded">Chargeback</span>'
-          : '<span class="px-2 py-1 text-xs font-medium text-gray-800 bg-gray-100 rounded">Completed</span>';
-
-      row.className = purchase.chargeback === 1 ? "bg-red-50" : "";
-      row.innerHTML = `
-        <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${
-          purchase.eventName
-        }</td>
-        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${purchaseDate}</td>
-        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${
-          purchase.ticketQuantity
-        }</td>
-        <td class="px-4 py-3 whitespace-nowrap text-sm font-semibold text-gray-900">$${total.toFixed(
-          2
-        )}</td>
-        <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${
-          purchase.creditCard
-        }</td>
-        <td class="px-4 py-3 whitespace-nowrap text-sm">${chargebackStatus}</td>
-      `;
+      const row = createHistoryRow(purchase);
       historyTableBody.appendChild(row);
     });
   } catch (err) {
     console.error("Failed to load purchase history:", err);
-    historyTableBody.innerHTML =
-      '<tr><td colspan="6" class="px-4 py-4 text-center text-red-500">Error loading history.</td></tr>';
+    showHistoryState("Error loading history.", true);
   }
 }
 
@@ -182,10 +204,10 @@ function exportToCsv() {
   const headers = [
     "Event",
     "Date",
+    "Email",
     "Tickets",
     "Total",
     "Card",
-    "Email",
     "Status",
   ];
 
@@ -198,10 +220,10 @@ function exportToCsv() {
     return [
       purchase.eventName,
       purchaseDate,
+      purchase.deliveryEmail || "",
       purchase.ticketQuantity,
       `$${total.toFixed(2)}`,
       purchase.creditCard,
-      purchase.deliveryEmail,
       status,
     ];
   });
@@ -218,13 +240,7 @@ function exportToCsv() {
   const url = URL.createObjectURL(blob);
 
   link.setAttribute("href", url);
-  link.setAttribute(
-    "download",
-    `purchase-history-${currentHistoryEmail.replace(
-      "@",
-      "-at-"
-    )}-${Date.now()}.csv`
-  );
+  link.setAttribute("download", `purchase-history-${Date.now()}.csv`);
   link.style.visibility = "hidden";
 
   document.body.appendChild(link);
@@ -240,6 +256,18 @@ historyModal.addEventListener("click", (e) => {
   }
 });
 exportCsvButton.addEventListener("click", exportToCsv);
+
+// Reset demo database
+resetLink.addEventListener("click", async () => {
+  try {
+    await fetch("/api/reset-db");
+    alert("Demo database reset. Refreshing page...");
+    window.location.reload();
+  } catch (err) {
+    console.error("Failed to reset DB:", err);
+    alert("Failed to reset demo DB.");
+  }
+});
 
 // Load purchases on page load
 loadPurchases();

@@ -64,6 +64,14 @@
           No purchases found.
         </p>
       </div>
+
+      <!-- Reset link -->
+      <p
+        id="reset"
+        class="text-center text-sm text-gray-400 hover:text-gray-600 mt-4 cursor-pointer"
+      >
+        Reset demo
+      </p>
     </div>
 
     <!-- Purchase Card Template -->
@@ -107,6 +115,68 @@
           </button>
         </div>
       </div>
+    </template>
+
+    <!-- History Table Row Template -->
+    <template id="historyRowTemplate">
+      <tr>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
+          data-event-name
+        >
+          Event Name
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-purchase-date
+        >
+          Date
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-email
+        >
+          Email
+        </td>
+        <!-- <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-visitor-id
+        >
+          Visitor ID
+        </td> -->
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-ticket-quantity
+        >
+          Quantity
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm font-semibold text-gray-900"
+          data-total
+        >
+          $0.00
+        </td>
+        <td
+          class="px-4 py-3 whitespace-nowrap text-sm text-gray-500"
+          data-credit-card
+        >
+          Card
+        </td>
+        <td class="px-4 py-3 whitespace-nowrap text-sm" data-status>Status</td>
+      </tr>
+    </template>
+
+    <!-- History State Message Template -->
+    <template id="historyStateTemplate">
+      <tr>
+        <td
+          colspan="8"
+          class="px-4 py-4 text-center text-gray-500"
+          data-message
+        >
+          Message
+        </td>
+      </tr>
     </template>
 
     <!-- Purchase History Modal -->
@@ -165,6 +235,16 @@
                   >
                     Date
                   </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Email
+                  </th>
+                  <!-- <th
+                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Visitor ID
+                  </th> -->
                   <th
                     class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >

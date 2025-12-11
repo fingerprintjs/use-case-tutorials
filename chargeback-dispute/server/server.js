@@ -7,7 +7,8 @@ import { initDb, resetDb } from "./db.js";
 import {
   getEvents,
   postPurchase,
-  getPurchases,
+  getUserPurchases,
+  getRelatedPurchases,
   getAllPurchases,
   disputePurchase,
 } from "./purchases.js";
@@ -62,14 +63,21 @@ app.get("/api/events", (_req, reply) => {
 
 // Post new purchase
 app.post("/api/purchases", async (req, reply) => {
-  const result = postPurchase(req.body);
+  const result = await postPurchase(req.body);
   return reply.send(result);
 });
 
 // Get purchases for a user
 app.get("/api/purchases", (req, reply) => {
-  const email = req.query.email || "jamie@example.com";
-  const result = getPurchases(email);
+  const email = req.query.email || "";
+  const result = getUserPurchases(email);
+  return reply.send(result);
+});
+
+// Get related purchases
+app.get("/api/purchases/:id/related", (req, reply) => {
+  const id = req.params.id;
+  const result = getRelatedPurchases(id);
   return reply.send(result);
 });
 

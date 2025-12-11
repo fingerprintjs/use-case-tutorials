@@ -26,8 +26,8 @@ function seedDefaults() {
   if (count.count > 0) return;
 
   const insert = db.prepare(`
-    INSERT INTO purchases(eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt)
-    VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @chargeback, @createdAt)
+    INSERT INTO purchases(eventName, ticketQuantity, price, creditCard, deliveryEmail, visitorId, chargeback, createdAt)
+    VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @visitorId, @chargeback, @createdAt)
   `);
 
   const now = Date.now();
@@ -40,6 +40,7 @@ function seedDefaults() {
       price: 89.0,
       creditCard: "card 1 - 8865",
       deliveryEmail: "casey.andrews@example.com",
+      visitorId: "visitor-123",
       chargeback: 0,
       createdAt: now - oneDay * 10,
     },
@@ -49,6 +50,7 @@ function seedDefaults() {
       price: 145.0,
       creditCard: "card 2 - 9012",
       deliveryEmail: "sarah.martin@example.com",
+      visitorId: "visitor-456",
       chargeback: 0,
       createdAt: now - oneDay * 8,
     },
@@ -58,6 +60,7 @@ function seedDefaults() {
       price: 79.0,
       creditCard: "card 1 - 8865",
       deliveryEmail: "casey.andrews@example.com",
+      visitorId: "visitor-123",
       chargeback: 0,
       createdAt: now - oneDay * 7,
     },
@@ -67,6 +70,7 @@ function seedDefaults() {
       price: 65.0,
       creditCard: "card 1 - 3456",
       deliveryEmail: "mike.chen@example.com",
+      visitorId: "visitor-789",
       chargeback: 0,
       createdAt: now - oneDay * 6,
     },
@@ -76,6 +80,7 @@ function seedDefaults() {
       price: 110.0,
       creditCard: "card 2 - 6789",
       deliveryEmail: "emily.jones@example.com",
+      visitorId: "visitor-101",
       chargeback: 0,
       createdAt: now - oneDay * 5,
     },
@@ -85,6 +90,7 @@ function seedDefaults() {
       price: 130.0,
       creditCard: "card 1 - 8865",
       deliveryEmail: "casey.andrews@example.com",
+      visitorId: "visitor-123",
       chargeback: 0,
       createdAt: now - oneDay * 4,
     },
@@ -94,6 +100,7 @@ function seedDefaults() {
       price: 55.0,
       creditCard: "card 2 - 9012",
       deliveryEmail: "sarah.martin@example.com",
+      visitorId: "visitor-456",
       chargeback: 0,
       createdAt: now - oneDay * 3,
     },
@@ -103,6 +110,7 @@ function seedDefaults() {
       price: 155.0,
       creditCard: "card 1 - 3456",
       deliveryEmail: "mike.chen@example.com",
+      visitorId: "visitor-789",
       chargeback: 0,
       createdAt: now - oneDay * 2,
     },
@@ -112,6 +120,7 @@ function seedDefaults() {
       price: 72.0,
       creditCard: "card 2 - 6789",
       deliveryEmail: "emily.jones@example.com",
+      visitorId: "visitor-101",
       chargeback: 0,
       createdAt: now - oneDay * 1,
     },
@@ -121,6 +130,7 @@ function seedDefaults() {
       price: 99.0,
       creditCard: "card 1 - 8865",
       deliveryEmail: "casey.andrews@example.com",
+      visitorId: "visitor-123",
       chargeback: 0,
       createdAt: now - oneDay * 0.5,
     },
