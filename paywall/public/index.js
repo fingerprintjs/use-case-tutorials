@@ -1,30 +1,10 @@
 // Elements
-const freeCountEl = document.getElementById("freeCount");
-const paywallModal = document.getElementById("paywall");
 const heroArticleEl = document.getElementById("heroArticle");
 const articlesContainer = document.getElementById("articlesContainer");
 const articleTmpl = document.getElementById("articleTmpl");
 const heroArticleTmpl = document.getElementById("heroArticleTmpl");
 const articleTagsTmpl = document.getElementById("articleTagsTmpl");
-const closePaywallBtn = document.getElementById("closePaywall");
 const resetLink = document.getElementById("resetLink");
-
-// Constants
-const FREE_ARTICLES_LIMIT = 3;
-
-// Get count of free articles remaining
-function getFreeArticlesRemaining() {
-  const articlesRead = localStorage.getItem("articlesRead") || "[]";
-  const articlesReadArray = JSON.parse(articlesRead);
-  return FREE_ARTICLES_LIMIT - articlesReadArray.length;
-}
-
-// Update counter of free articles remaining in UI
-function updateFreeCount() {
-  const articlesRemaining = getFreeArticlesRemaining();
-  freeCountEl.textContent = `${articlesRemaining} free articles remaining`;
-  if (articlesRemaining == 0) paywallModal.classList.remove("hidden");
-}
 
 // Get and display article summaries
 async function getArticleSummaries() {
@@ -67,11 +47,6 @@ async function getArticleSummaries() {
   }
 }
 
-// Close paywall modal
-closePaywallBtn.addEventListener("click", () => {
-  paywallModal.classList.add("hidden");
-});
-
 // Reset demo
 resetLink.addEventListener("click", async () => {
   localStorage.removeItem("articlesRead");
@@ -86,5 +61,4 @@ resetLink.addEventListener("click", async () => {
   }
 });
 
-updateFreeCount();
 getArticleSummaries();

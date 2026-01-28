@@ -26,30 +26,14 @@
       </div>
     </div>
 
-    <div id="paywall" class="hidden mx-auto max-w-3xl px-4 py-8">
-      <h2 class="text-2xl font-bold">Subscribe to continue</h2>
-      <p class="text-gray-600">
-        You have reached the free article limit. Subscribe to continue reading.
-      </p>
+    <div id="response" class="hidden mx-auto max-w-3xl px-4 py-8 text-center">
+      <p class="text-gray-600" id="responseMessage"></p>
     </div>
 
-    <div id="article" class="hidden mx-auto max-w-3xl px-4 py-8">
+    <div id="article" class="mx-auto max-w-3xl px-4 py-8">
       <!-- Hero image -->
       <div id="hero" class="aspect-[16/9] w-full rounded-xl bg-orange-100">
-        <svg
-          viewBox="0 0 1600 900"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-full h-full object-cover"
-          aria-label="Hero post"
-        >
-          <image
-            id="heroImage"
-            href="/blog-image.svg"
-            width="1600"
-            height="900"
-          />
-        </svg>
+        <image id="heroImage" class="w-full h-full object-cover rounded-xl" />
       </div>
 
       <!-- Title -->
@@ -78,5 +62,13 @@
         </div>
       </div>
     </div>
+
+    <!-- Reset demo link -->
+    <p
+      id="resetLink"
+      class="text-center text-sm text-gray-400 hover:text-gray-600 mb-4 cursor-pointer"
+    >
+      Reset demo
+    </p>
   </body>
 </html>

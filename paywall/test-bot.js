@@ -8,9 +8,9 @@ import puppeteer from "puppeteer";
     waitUntil: "networkidle0",
   });
 
-  // Wait until either paywall is shown OR article is shown
+  // Wait until either response is shown OR article is shown
   await page.waitForFunction(() => {
-    const paywall = document.querySelector("#paywall");
+    const response = document.querySelector("#response");
     const article = document.querySelector("#article");
 
     const isVisible = (el) => {
@@ -22,12 +22,12 @@ import puppeteer from "puppeteer";
       );
     };
 
-    return isVisible(paywall) || isVisible(article);
+    return isVisible(response) || isVisible(article);
   });
 
   // Extract message based on which one is visible
   const message = await page.evaluate(() => {
-    const paywall = document.querySelector("#paywall");
+    const response = document.querySelector("#response");
     const article = document.querySelector("#article");
 
     const isVisible = (el) => {
@@ -39,14 +39,14 @@ import puppeteer from "puppeteer";
       );
     };
 
-    if (isVisible(paywall) && !isVisible(article)) {
+    if (isVisible(response) && !isVisible(article)) {
       return {
-        status: "paywalled",
-        text: paywall.textContent.trim(),
+        status: "blocked",
+        text: response.textContent.trim(),
       };
     }
 
-    if (isVisible(article) && !isVisible(paywall)) {
+    if (isVisible(article) && !isVisible(response)) {
       return {
         status: "unlocked",
         text: article.textContent.trim(),

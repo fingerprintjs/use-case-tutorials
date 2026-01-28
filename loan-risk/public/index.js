@@ -51,17 +51,11 @@ function recalc() {
 // Show result message
 function showResult(success, message) {
   resultMsg.textContent = (success ? "✅ " : "⚠️ ") + message;
-  resultBox.classList.remove(
-    "hidden",
-    "bg-red-100",
-    "text-red-800",
-    "bg-green-100",
-    "text-green-800"
-  );
-  resultBox.classList.add(
-    success ? "bg-green-100" : "bg-red-100",
-    success ? "text-green-800" : "text-red-800"
-  );
+  resultBox.classList.remove("hidden");
+  resultBox.classList.toggle("bg-red-100", !success);
+  resultBox.classList.toggle("bg-green-100", success);
+  resultBox.classList.toggle("text-red-800", !success);
+  resultBox.classList.toggle("text-green-800", success);
 }
 
 // Request loan

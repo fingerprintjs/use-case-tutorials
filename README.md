@@ -10,12 +10,18 @@ Each tutorial is a self-contained demo application with:
 Current tutorials:
 
 - [**Account sharing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/account-sharing) – Prevent account sharing across multiple devices.
-- [**Coupon abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/coupon-abuse) – Enforce one-time coupon usage per visitor.
+- [**Ban evasion prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/ban-evasion) – Prevent banned users from evading enforcement and returning under new accounts.
+- [**Card testing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/card-testing) – Stop card testing and card cracking attacks using device intelligence.
+- [**Chargeback dispute support**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/chargeback-dispute) – Link purchases to devices to help investigate and dispute chargebacks.
+- [**Coupon abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/coupon-abuse) – Enforce appropriate coupon usage per visitor.
 - [**Credential stuffing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/credential-stuffing) – Prevent credential stuffing attacks and protect against account takeover.
 - [**Loan application fraud prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/loan-risk) – Collect high-quality, low-risk loan applications and prevent loan application fraud.
-- [**Web scraping prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/web-scraping) – Prevent your proprietary content from being scraped by bots.
-
-_More tutorials will be added over time._
+- [**New account fraud prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/new-account-fraud) – Stop multi-accounting, free trial abuse, and other new account fraud.
+- [**Paywall enforcement**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/paywall) – Enforce paywalls even when users clear cookies or change IP addresses.
+- [**Regional pricing enforcement**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/regional-pricing) – Enforce region-based pricing and stop VPN-based pricing abuse.
+- [**SMS pumping prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/sms-pumping) – Prevent automated SMS pumping abuse and reduce messaging costs.
+- [**Survey fraud prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/survey-fraud) – Stop duplicate and fraudulent survey submissions.
+- [**Web scraping prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/web-scraping) – Protect your proprietary content from being scraped by bots.
 
 ## General setup
 
