@@ -2,8 +2,8 @@
 // Change region to match your workspace region
 // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
-  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
+  `https://fpjscdn.net/v4/${window.FP_PUBLIC_API_KEY}`
+).then((FingerprintJS) => FingerprintJS.start({ region: "us" }));
 
 // Elements
 const submitBtn = document.getElementById("submitBtn");
@@ -38,7 +38,7 @@ submitBtn.addEventListener("click", async () => {
   const q4El = document.getElementById("q4");
 
   const fp = await fpPromise;
-  const { requestId } = await fp.get();
+  const { event_id: eventId } = await fp.get();
 
   const data = {
     firstName: firstNameEl.value,
@@ -47,7 +47,7 @@ submitBtn.addEventListener("click", async () => {
     q2: q2Selected ? q2Selected.value : null,
     q3: q3Selected ? q3Selected.value : null,
     q4: q4El.value,
-    requestId,
+    eventId,
   };
 
   if (!data.firstName || !data.email || !data.q1 || !data.q2 || !data.q3) {

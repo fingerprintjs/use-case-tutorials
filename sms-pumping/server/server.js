@@ -40,8 +40,8 @@ app.get("/config.js", (_req, reply) => {
 
 // Send SMS
 app.post("/api/send-sms", async (req, reply) => {
-  const { name, phone, requestId } = req.body;
-  const result = await sendSMS({ name, phone, requestId });
+  const { name, phone, eventId } = req.body;
+  const result = await sendSMS({ name, phone, eventId });
   return reply.send(result);
 });
 

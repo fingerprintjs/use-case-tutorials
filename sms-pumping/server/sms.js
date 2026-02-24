@@ -12,12 +12,12 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
   region: Region.Global,
 });
 
-export async function sendSMS({ name, phone, requestId }) {
+export async function sendSMS({ name, phone, eventId }) {
   if (!name || !phone) {
     return { success: false, message: "Name and phone number are required." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
   if (botDetected) {

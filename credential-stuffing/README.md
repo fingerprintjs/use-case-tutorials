@@ -38,7 +38,7 @@ A default account is included for testing:
 
 ## Resetting the demo database
 
-To clear all redemptions and reset coupon usage:
+To clear stored data and reset the demo database:
 
 - Click **Reset demo DB** at the bottom of the demo app page, or
 - Run this from the terminal:

@@ -2,8 +2,8 @@
 // Change region to match your workspace region
 // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
-  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
+  `https://fpjscdn.net/v4/${window.FP_PUBLIC_API_KEY}`
+).then((FingerprintJS) => FingerprintJS.start({ region: "us" }));
 
 // Elements
 const firstNameEl = document.getElementById("firstName");
@@ -74,7 +74,7 @@ function showResult(success, message) {
 // Request loan
 requestBtn.addEventListener("click", async () => {
   const fp = await fpPromise;
-  const { requestId } = await fp.get();
+  const { event_id: eventId } = await fp.get();
 
   const data = {
     firstName: firstNameEl.value,
@@ -82,7 +82,7 @@ requestBtn.addEventListener("click", async () => {
     loanAmount: amountRange.value,
     monthlyIncome: incomeRange.value,
     loanTerms: termRange.value,
-    requestId,
+    eventId,
   };
 
   try {

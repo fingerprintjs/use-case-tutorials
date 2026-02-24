@@ -19,7 +19,7 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Resetting the demo database
+## Resetting the demo database
 
 To clear all accounts and reset the demo database:
 

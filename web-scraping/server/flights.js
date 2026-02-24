@@ -14,13 +14,13 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
   region: Region.Global,
 });
 
-export async function fetchFlights({ from, to, departDate, requestId }) {
-  if (!from || !to || !departDate || !requestId) {
+export async function fetchFlights({ from, to, departDate, eventId }) {
+  if (!from || !to || !departDate || !eventId) {
     console.error("Missing required fields.");
     return { success: false, message: "Missing required fields." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   // Check for bot activity
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";

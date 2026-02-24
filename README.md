@@ -31,7 +31,7 @@ Current tutorials:
 npm install
 ```
 
-2. Copy or rename `.env.example` to `.env` and add your Fingerprint secret API key.
+2. Copy or rename `.env.example` to `.env` and add your Fingerprint API keys.
 
 3. Start the server:
 

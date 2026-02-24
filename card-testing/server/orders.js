@@ -13,10 +13,10 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 export async function placeOrder(body) {
-  const { recipientEmail, amount, cardNumber, cardExp, cardCvv, requestId } =
+  const { recipientEmail, amount, cardNumber, cardExp, cardCvv, eventId } =
     body;
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
   if (botDetected) {

@@ -13,10 +13,10 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
   region: Region.Global,
 });
 
-export async function getArticle(articleId, requestId) {
+export async function getArticle(articleId, eventId) {
   const FREE_ARTICLES_LIMIT = 3;
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
   const visitorId = event.products?.identification?.data?.visitorId || "";
 
   const articlesRead = getArticlesRead(visitorId);
@@ -74,10 +74,15 @@ export async function getArticle(articleId, requestId) {
 
   // Record read and return updated remaining count
   recordArticleRead(visitorId, articleId);
+  const articlesReadNow = getArticlesRead(visitorId);
+  const remaining = Math.max(
+    0,
+    FREE_ARTICLES_LIMIT - articlesReadNow.length
+  );
   return {
     success: true,
     article,
-    articlesRemaining: Math.max(0, articlesRemaining - 1),
+    articlesRemaining: remaining,
   };
 }
 

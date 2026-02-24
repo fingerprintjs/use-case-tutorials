@@ -2,8 +2,8 @@
 // Change region to match your workspace region
 // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
-  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
+  `https://fpjscdn.net/v4/${window.FP_PUBLIC_API_KEY}`
+).then((FingerprintJS) => FingerprintJS.start({ region: "us" }));
 
 // Elements
 const fromSelect = document.getElementById("from");
@@ -151,13 +151,13 @@ searchBtn.addEventListener("click", async () => {
   const passengers = passengersSelect.value;
 
   const fp = await fpPromise;
-  const { requestId } = await fp.get();
+  const { event_id: eventId } = await fp.get();
 
   try {
     const res = await fetch("/api/fetch-flights", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to, departDate, passengers, requestId }),
+      body: JSON.stringify({ from, to, departDate, passengers, eventId }),
     });
 
     const data = await res.json();

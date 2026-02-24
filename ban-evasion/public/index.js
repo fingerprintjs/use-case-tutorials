@@ -2,8 +2,8 @@
 // Change region to match your workspace region
 // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
-  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
+  `https://fpjscdn.net/v4/${window.FP_PUBLIC_API_KEY}`
+).then((FingerprintJS) => FingerprintJS.start({ region: "us" }));
 
 // DOM Elements
 const listingsContainer = document.getElementById("listings");
@@ -144,7 +144,7 @@ submitBtn.addEventListener("click", async () => {
   }
 
   const fp = await fpPromise;
-  const { requestId } = await fp.get();
+  const { event_id: eventId } = await fp.get();
 
   try {
     const res = await fetch("/api/listings", {
@@ -158,7 +158,7 @@ submitBtn.addEventListener("click", async () => {
         ticketCount,
         ticketDescription,
         sellerEmail,
-        requestId,
+        eventId,
       }),
     });
 

@@ -13,8 +13,8 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 // Get the regional discount
-export async function getRegionDiscount(requestId) {
-  const event = await fpServerApiClient.getEvent(requestId);
+export async function getRegionDiscount(eventId) {
+  const event = await fpServerApiClient.getEvent(eventId);
   const ipLocation = event.products.identification.data.ipLocation;
   const countryCode = ipLocation.country.code;
   const countryName = ipLocation.country.name;

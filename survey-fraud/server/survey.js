@@ -13,9 +13,9 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 export async function submitSurvey(body) {
-  const { email, requestId } = body;
+  const { email, eventId } = body;
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
   if (botDetected) {

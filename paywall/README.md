@@ -25,3 +25,8 @@ npm run dev
 To clear free articles count and reset the demo:
 
 - Click **Reset demo** at the bottom of the demo app page, or
+- Run this from the terminal:
+
+```bash
+npm run reset-db
+```

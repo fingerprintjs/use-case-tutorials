@@ -13,9 +13,9 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 export async function postListing(body) {
-  const { requestId } = body;
+  const { eventId } = body;
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
   const visitorId = event.products.identification.data.visitorId;
 
   const suspectScore = event.products?.suspectScore?.data?.result || 0;

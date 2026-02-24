@@ -51,7 +51,7 @@ app.get("/api/articles", async (_req, reply) => {
 
 // Get article (for final demo)
 app.post("/api/article/:id", async (req, reply) => {
-  const article = await getArticle(req.params.id, req.body.requestId);
+  const article = await getArticle(req.params.id, req.body.eventId);
   return reply.send(article);
 });
 

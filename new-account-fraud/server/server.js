@@ -40,8 +40,8 @@ app.get("/config.js", (_req, reply) => {
 
 // Attempt to sign up
 app.post("/api/signup", async (req, reply) => {
-  const { username, password, requestId } = req.body || {};
-  const result = await attemptSignup({ username, password, requestId });
+  const { username, password, eventId } = req.body || {};
+  const result = await attemptSignup({ username, password, eventId });
   return reply.send(result);
 });
 

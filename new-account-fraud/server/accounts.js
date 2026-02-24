@@ -12,8 +12,8 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
   region: Region.Global,
 });
 
-export async function attemptSignup({ username, password, requestId }) {
-  if (!username || !password || !requestId) {
+export async function attemptSignup({ username, password, eventId }) {
+  if (!username || !password || !eventId) {
     console.error("Missing one or more inputs.");
     return { success: false, error: "Sign up failed." };
   }
@@ -24,7 +24,7 @@ export async function attemptSignup({ username, password, requestId }) {
     return { success: false, error: "Signup failed." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
 

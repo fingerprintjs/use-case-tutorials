@@ -41,8 +41,8 @@ app.get("/config.js", (_req, reply) => {
 
 // Attempt to login
 app.post("/api/login", async (req, reply) => {
-  const { email, password, requestId } = req.body || {};
-  const result = await attemptLogin({ email, password, requestId });
+  const { email, password, eventId } = req.body || {};
+  const result = await attemptLogin({ email, password, eventId });
   return reply.send(result);
 });
 

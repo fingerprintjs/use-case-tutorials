@@ -2,8 +2,8 @@
 // Change region to match your workspace region
 // (e.g., "eu" for Europe, "ap" for Asia, "us" for Global (default))
 const fpPromise = import(
-  `https://fpjscdn.net/v3/${window.FP_PUBLIC_API_KEY}`
-).then((FingerprintJS) => FingerprintJS.load({ region: "us" }));
+  `https://fpjscdn.net/v4/${window.FP_PUBLIC_API_KEY}`
+).then((FingerprintJS) => FingerprintJS.start({ region: "us" }));
 
 // Elements
 const freeCountEl = document.getElementById("freeCount");
@@ -24,17 +24,19 @@ async function getArticle() {
 
   try {
     const fp = await fpPromise;
-    const { requestId } = await fp.get();
+    const { event_id: eventId } = await fp.get();
 
     const response = await fetch(`/api/article/${articleId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ requestId }),
+      body: JSON.stringify({ eventId }),
     });
     const data = await response.json();
 
     const articlesRemaining = data.articlesRemaining;
-    let text = `${articlesRemaining} free article(s) remaining`;
+    let text = `${articlesRemaining} free article${
+      articlesRemaining == 1 ? "" : "s"
+    } remaining`;
     if (articlesRemaining == 0)
       text = "You have reached your free article limit";
     freeCountEl.textContent = text;

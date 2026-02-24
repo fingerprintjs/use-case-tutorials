@@ -14,18 +14,18 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
   region: Region.Global,
 });
 
-export async function attemptLogin({ email, password, requestId }) {
+export async function attemptLogin({ email, password, eventId }) {
   if (!email || !password) {
     console.error("Missing email or password.");
     return { success: false, error: "Login failed." };
   }
 
-  if (!requestId) {
-    console.error("Missing requestId.");
+  if (!eventId) {
+    console.error("Missing eventId.");
     return { success: false, error: "Login failed." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
   const visitorId = event.products.identification.data.visitorId;
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";

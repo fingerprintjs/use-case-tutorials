@@ -23,18 +23,18 @@ export async function requestLoan(data) {
     loanAmount,
     monthlyIncome,
     loanTerms,
-    requestId,
+    eventId,
   } = data;
 
   if (
     (!firstName || !lastName || !loanAmount || !monthlyIncome || !loanTerms,
-    !requestId)
+    !eventId)
   ) {
     console.error("Missing required fields.");
     return { success: false, message: "Missing required fields." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
   const visitorId = event.products.identification.data.visitorId;
 
   const loanData = {

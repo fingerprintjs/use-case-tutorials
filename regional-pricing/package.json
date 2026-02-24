@@ -5,8 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "dev": "node --watch server/server.js",
-    "start": "node server/server.js",
-    "reset-db": "node -e \"import('./server/db.js').then(m => m.resetDb())\""
+    "start": "node server/server.js"
   },
   "keywords": [],
   "author": "",

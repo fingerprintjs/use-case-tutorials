@@ -41,10 +41,10 @@ app.get("/config.js", (_req, reply) => {
 
 // Validate the coupon code
 app.post("/api/validate-coupon", async (req, reply) => {
-  const { coupon, requestId } = req.body || {};
+  const { coupon, eventId } = req.body || {};
   const code = (coupon || "").toUpperCase().trim();
 
-  const result = await validateCoupon(code, requestId);
+  const result = await validateCoupon(code, eventId);
   return reply.send(result);
 });
 

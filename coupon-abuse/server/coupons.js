@@ -15,14 +15,14 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 });
 
 // Validate the coupon code
-export async function validateCoupon(code, requestId) {
+export async function validateCoupon(code, eventId) {
   if (!code) {
     console.error("Missing coupon code.");
     return { success: false, error: "Coupon validation failed." };
   }
 
-  if (!requestId) {
-    console.error("Missing requestId.");
+  if (!eventId) {
+    console.error("Missing eventId.");
     return { success: false, error: "Coupon validation failed." };
   }
 
@@ -32,7 +32,7 @@ export async function validateCoupon(code, requestId) {
     return { success: false, error: "Coupon validation failed." };
   }
 
-  const event = await fpServerApiClient.getEvent(requestId);
+  const event = await fpServerApiClient.getEvent(eventId);
 
   const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
 

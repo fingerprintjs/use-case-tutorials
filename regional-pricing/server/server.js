@@ -38,8 +38,8 @@ app.get("/config.js", (_req, reply) => {
 
 // Get the regional discount
 app.post("/api/region-discount", async (req, reply) => {
-  const { requestId } = req.body;
-  const result = await getRegionDiscount(requestId);
+  const { eventId } = req.body;
+  const result = await getRegionDiscount(eventId);
   return reply.send(result);
 });
 
