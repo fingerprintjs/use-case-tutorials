@@ -1,13 +1,13 @@
 import fs from "fs";
 import { config } from "dotenv";
 import {
-  FingerprintJsServerApiClient,
+  FingerprintServerApiClient,
   Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+} from "@fingerprint/node-sdk";
 
 config();
 
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -15,11 +15,11 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 // Get the regional discount
 export async function getRegionDiscount(eventId) {
   const event = await fpServerApiClient.getEvent(eventId);
-  const ipLocation = event.products.identification.data.ipLocation;
-  const countryCode = ipLocation.country.code;
-  const countryName = ipLocation.country.name;
+  const ipInfoV4Location = event.ip_info.v4.geolocation
+  const countryCode = ipInfoV4Location.country_code;
+  const countryName = ipInfoV4Location.country_name;
 
-  const vpnDetected = event.products.vpn.data.result;
+  const vpnDetected = event.vpn;
   if (vpnDetected) {
     console.error("VPN detected.");
     return {
@@ -29,8 +29,7 @@ export async function getRegionDiscount(eventId) {
     };
   }
 
-  const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
-
+  const botDetected = event.bot !== "not_detected";
   if (botDetected) {
     console.error("Bot detected.");
     return {
@@ -39,8 +38,7 @@ export async function getRegionDiscount(eventId) {
     };
   }
 
-  const suspectScore = event.products?.suspectScore?.data?.result || 0;
-
+  const suspectScore = event.suspect_score || 0;
   if (suspectScore > 20) {
     console.error(`High Suspect Score detected: ${suspectScore}`);
     return {
@@ -83,13 +81,19 @@ function countryCodeToEmoji(code = "") {
 // Fetch the country code and name from the IP address
 async function fetchGeo(ip) {
   try {
-    const geoRes = await fetch(`https://ipwho.is/${ip}`);
+    const geoRes = await fetch(`http://ip-api.com/json/${ip}`);
+    
+    if (geoRes.status === 429) {
+      console.error("Too many requests. Please try again later.");
+      return { countryCode: null, countryName: null }
+    }
+    
     const geo = await geoRes.json();
 
-    if (!geo.success) return { countryCode: null, countryName: null };
+    if (geo.status !== "success") return { countryCode: null, countryName: null };
 
     return {
-      countryCode: geo.country_code.toUpperCase(),
+      countryCode: geo.countryCode.toUpperCase(),
       countryName: geo.country,
     };
   } catch (err) {
