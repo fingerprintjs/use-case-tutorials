@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent new account fraud, including free trial abuse, multi-accounting, and brute force attacks, using Fingerprint.
 
+See the full guide at [New Account Fraud Use Case Tutorial](https://docs.fingerprint.com/docs/new-account-fraud-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:
