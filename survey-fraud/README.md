@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to collect survey responses and prevent repeat or fraudulent submissions using Fingerprint.
 
+See the full guide at [Survey Fraud Use Case Tutorial](https://docs.fingerprint.com/docs/survey-fraud-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

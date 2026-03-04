@@ -84,7 +84,7 @@ clearBtn?.addEventListener("click", () => {
 // Reset demo
 resetLink.addEventListener("click", async () => {
   try {
-    await fetch("/api/reset");
+    await fetch("/api/reset-db");
     showResult(true, "Demo reset. You can submit the survey again.");
   } catch (err) {
     console.error("Failed to reset demo:", err);
