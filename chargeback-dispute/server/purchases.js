@@ -1,13 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
 import {
-  FingerprintJsServerApiClient,
+  FingerprintServerApiClient,
   Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+} from "@fingerprint/node-sdk";
 
 config();
 
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -17,7 +17,7 @@ export async function postPurchase(body) {
 
   const { eventId } = body;
   const event = await fpServerApiClient.getEvent(eventId);
-  const visitorId = event.products.identification.data.visitorId;
+  const visitorId = event.identification.visitor_id;
 
   try {
     db.prepare(
