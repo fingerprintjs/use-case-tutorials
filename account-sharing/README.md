@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent account sharing using Fingerprint.
 
+See the full guide at [Account Sharing Use Case Tutorial](https://docs.fingerprint.com/docs/account-sharing-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:
