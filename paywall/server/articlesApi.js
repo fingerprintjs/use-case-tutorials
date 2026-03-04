@@ -2,13 +2,13 @@ import fs from "fs";
 import { db } from "./db.js";
 import { config } from "dotenv";
 import {
-  FingerprintJsServerApiClient,
+  FingerprintServerApiClient,
   Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+} from "@fingerprint/node-sdk";
 
 config();
 
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -17,7 +17,7 @@ export async function getArticle(articleId, eventId) {
   const FREE_ARTICLES_LIMIT = 3;
 
   const event = await fpServerApiClient.getEvent(eventId);
-  const visitorId = event.products?.identification?.data?.visitorId || "";
+  const visitorId = event.identification.visitor_id || "";
 
   const articlesRead = getArticlesRead(visitorId);
   const articlesRemaining = Math.max(
@@ -40,7 +40,7 @@ export async function getArticle(articleId, eventId) {
   }
 
   // Check for bot activity
-  const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
+  const botDetected = event.bot !== "not_detected";
   if (botDetected) {
     console.error("Bot detected.");
     return {
@@ -51,7 +51,7 @@ export async function getArticle(articleId, eventId) {
   }
 
   // Check for a high suspect score
-  const suspectScore = event.products?.suspectScore?.data?.result || 0;
+  const suspectScore = event.suspect_score || 0;
   if (suspectScore > 20) {
     console.error(`High Suspect Score detected: ${suspectScore}`);
     return {
