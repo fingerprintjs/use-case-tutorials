@@ -1,15 +1,15 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
 import {
-  FingerprintJsServerApiClient,
+  FingerprintServerApiClient,
   Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+} from "@fingerprint/node-sdk";
 
 config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -23,7 +23,7 @@ export async function fetchFlights({ from, to, departDate, eventId }) {
   const event = await fpServerApiClient.getEvent(eventId);
 
   // Check for bot activity
-  const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
+  const botDetected = event.bot !== "not_detected";
 
   if (botDetected) {
     console.error("Bot detected.");
@@ -31,7 +31,7 @@ export async function fetchFlights({ from, to, departDate, eventId }) {
   }
 
   // Check for a high suspect score
-  const suspectScore = event.products?.suspectScore?.data?.result || 0;
+  const suspectScore = event.suspect_score || 0;
 
   if (suspectScore > 20) {
     console.error(`High Suspect Score detected: ${suspectScore}`);
