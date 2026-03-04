@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent ban evasion using Fingerprint.
 
+See the full guide at [Ban Enforcement Use Case Tutorial](https://docs.fingerprint.com/docs/ban-enforcement-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:
