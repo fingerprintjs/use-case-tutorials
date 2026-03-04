@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent credential stuffing attacks using Fingerprint.
 
+See the full guide at [Credential Stuffing Use Case Tutorial](https://docs.fingerprint.com/docs/credential-stuffing-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:
