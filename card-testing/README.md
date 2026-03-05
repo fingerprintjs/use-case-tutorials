@@ -2,7 +2,7 @@
 
 This use case tutorial shows how to stop card testing and cracking using Fingerprint.
 
-See the full guide at [Ban Enforcement Use Case Tutorial](https://docs.fingerprint.com/docs/card-testing-use-case-tutorial).
+See the full guide at [Card Testing Use Case Tutorial](https://docs.fingerprint.com/docs/card-testing-use-case-tutorial).
 
 ## Setup
 
