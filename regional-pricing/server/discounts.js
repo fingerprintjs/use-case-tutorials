@@ -1,9 +1,6 @@
 import fs from "fs";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
@@ -15,7 +12,7 @@ const fpServerApiClient = new FingerprintServerApiClient({
 // Get the regional discount
 export async function getRegionDiscount(eventId) {
   const event = await fpServerApiClient.getEvent(eventId);
-  const ipInfoV4Location = event.ip_info.v4.geolocation
+  const ipInfoV4Location = event.ip_info.v4.geolocation;
   const countryCode = ipInfoV4Location.country_code;
   const countryName = ipInfoV4Location.country_name;
 
@@ -76,30 +73,6 @@ function countryCodeToEmoji(code = "") {
     .replace(/./g, (c) => String.fromCodePoint(0x1f1e6 - 65 + c.charCodeAt(0)));
 
   return emoji;
-}
-
-// Fetch the country code and name from the IP address
-async function fetchGeo(ip) {
-  try {
-    const geoRes = await fetch(`http://ip-api.com/json/${ip}`);
-    
-    if (geoRes.status === 429) {
-      console.error("Too many requests. Please try again later.");
-      return { countryCode: null, countryName: null }
-    }
-    
-    const geo = await geoRes.json();
-
-    if (geo.status !== "success") return { countryCode: null, countryName: null };
-
-    return {
-      countryCode: geo.countryCode.toUpperCase(),
-      countryName: geo.country,
-    };
-  } catch (err) {
-    console.error("Failed to fetch IP info:", err);
-    return { countryCode: null, countryName: null };
-  }
 }
 
 // Get the regional discount percentage
