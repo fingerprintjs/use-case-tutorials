@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to use Fingerprint to dispute chargebacks by linking purchase history to a browser/device.
 
+See the full guide at [Chargeback Dispute Use Case Tutorial](https://docs.fingerprint.com/docs/chargeback-dispute-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

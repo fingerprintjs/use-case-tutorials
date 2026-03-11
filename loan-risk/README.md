@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to collect high-quality, low-risk loan applications and prevent loan application fraud using Fingerprint.
 
+See the full guide at [Loan Fraud Use Case Tutorial](https://docs.fingerprint.com/docs/loan-fraud-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

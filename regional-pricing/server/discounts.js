@@ -38,13 +38,19 @@ function countryCodeToEmoji(code = "") {
 // Fetch the country code and name from the IP address
 async function fetchGeo(ip) {
   try {
-    const geoRes = await fetch(`https://ipwho.is/${ip}`);
+    const geoRes = await fetch(`http://ip-api.com/json/${ip}`);
+    
+    if (geoRes.status === 429) {
+      console.error("Too many requests. Please try again later.");
+      return { countryCode: null, countryName: null }
+    }
+    
     const geo = await geoRes.json();
 
-    if (!geo.success) return { countryCode: null, countryName: null };
+    if (geo.status !== "success") return { countryCode: null, countryName: null };
 
     return {
-      countryCode: geo.country_code.toUpperCase(),
+      countryCode: geo.countryCode.toUpperCase(),
       countryName: geo.country,
     };
   } catch (err) {

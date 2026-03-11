@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to enforce a paywall on your website using Fingerprint even when cookies are cleared.
 
+See the full guide at [Paywall Enforcement Use Case Tutorial](https://docs.fingerprint.com/docs/paywall-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

@@ -68,10 +68,10 @@ function showResult(data) {
 // Get IP address for local demo
 async function getIp() {
   try {
-    const res = await fetch("https://ipwho.is/");
+    const res = await fetch("http://ip-api.com/json");
     const data = await res.json();
 
-    return data.ip || null;
+    return data.query || null;
   } catch (err) {
     console.error("Failed to get IP:", err);
     return null;
