@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to enforce regional pricing using Fingerprint and stop VPN-based attempts to claim pricing meant for other regions.
 
+See the full guide at [Regional Pricing Use Case Tutorial](https://docs.fingerprint.com/docs/regional-pricing-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

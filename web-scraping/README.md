@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to protect proprietary data from being scraped by bots using Fingerprint.
 
+See the full guide at [Web Scraping Use Case Tutorial](https://docs.fingerprint.com/docs/web-scraping-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

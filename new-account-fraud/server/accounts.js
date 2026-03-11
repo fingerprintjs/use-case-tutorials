@@ -1,13 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
 import {
-  FingerprintJsServerApiClient,
+  FingerprintServerApiClient,
   Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+} from "@fingerprint/node-sdk";
 
 config();
 
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -26,21 +26,21 @@ export async function attemptSignup({ username, password, eventId }) {
 
   const event = await fpServerApiClient.getEvent(eventId);
 
-  const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
+  const botDetected = event.bot !== "not_detected";
 
   if (botDetected) {
     console.error("Bot detected.");
     return { success: false, error: "Signup failed." };
   }
 
-  const suspectScore = event.products?.suspectScore?.data?.result || 0;
+  const suspectScore = event.suspect_score || 0;
 
   if (suspectScore > 20) {
     console.error(`High Suspect Score detected: ${suspectScore}`);
     return { success: false, error: "Signup failed." };
   }
 
-  const visitorId = event.products.identification.data.visitorId;
+  const visitorId = event.identification.visitor_id;
   const account = findAccountByVisitorId(visitorId);
   if (account) {
     console.error("Account already exists for this device.");

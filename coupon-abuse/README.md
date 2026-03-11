@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent coupon abuse using Fingerprint.
 
+See the full guide at [Coupon Abuse Use Case Tutorial](https://docs.fingerprint.com/docs/coupon-abuse-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

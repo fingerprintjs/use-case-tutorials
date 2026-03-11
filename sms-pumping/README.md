@@ -2,6 +2,8 @@
 
 This use case tutorial shows how to prevent SMS pumping abuse using Fingerprint.
 
+See the full guide at [SMS Pumping Use Case Tutorial](https://docs.fingerprint.com/docs/sms-pumping-use-case-tutorial).
+
 ## Setup
 
 1. Clone this repo and install dependencies:

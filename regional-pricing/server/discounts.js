@@ -1,13 +1,10 @@
 import fs from "fs";
 import { config } from "dotenv";
-import {
-  FingerprintJsServerApiClient,
-  Region,
-} from "@fingerprintjs/fingerprintjs-pro-server-api";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
-const fpServerApiClient = new FingerprintJsServerApiClient({
+const fpServerApiClient = new FingerprintServerApiClient({
   apiKey: process.env.FP_SECRET_API_KEY,
   region: Region.Global,
 });
@@ -15,11 +12,11 @@ const fpServerApiClient = new FingerprintJsServerApiClient({
 // Get the regional discount
 export async function getRegionDiscount(eventId) {
   const event = await fpServerApiClient.getEvent(eventId);
-  const ipLocation = event.products.identification.data.ipLocation;
-  const countryCode = ipLocation.country.code;
-  const countryName = ipLocation.country.name;
+  const ipInfoV4Location = event.ip_info.v4.geolocation;
+  const countryCode = ipInfoV4Location.country_code;
+  const countryName = ipInfoV4Location.country_name;
 
-  const vpnDetected = event.products.vpn.data.result;
+  const vpnDetected = event.vpn;
   if (vpnDetected) {
     console.error("VPN detected.");
     return {
@@ -29,8 +26,7 @@ export async function getRegionDiscount(eventId) {
     };
   }
 
-  const botDetected = event.products?.botd?.data?.bot?.result !== "notDetected";
-
+  const botDetected = event.bot !== "not_detected";
   if (botDetected) {
     console.error("Bot detected.");
     return {
@@ -39,8 +35,7 @@ export async function getRegionDiscount(eventId) {
     };
   }
 
-  const suspectScore = event.products?.suspectScore?.data?.result || 0;
-
+  const suspectScore = event.suspect_score || 0;
   if (suspectScore > 20) {
     console.error(`High Suspect Score detected: ${suspectScore}`);
     return {
@@ -78,24 +73,6 @@ function countryCodeToEmoji(code = "") {
     .replace(/./g, (c) => String.fromCodePoint(0x1f1e6 - 65 + c.charCodeAt(0)));
 
   return emoji;
-}
-
-// Fetch the country code and name from the IP address
-async function fetchGeo(ip) {
-  try {
-    const geoRes = await fetch(`https://ipwho.is/${ip}`);
-    const geo = await geoRes.json();
-
-    if (!geo.success) return { countryCode: null, countryName: null };
-
-    return {
-      countryCode: geo.country_code.toUpperCase(),
-      countryName: geo.country,
-    };
-  } catch (err) {
-    console.error("Failed to fetch IP info:", err);
-    return { countryCode: null, countryName: null };
-  }
 }
 
 // Get the regional discount percentage
