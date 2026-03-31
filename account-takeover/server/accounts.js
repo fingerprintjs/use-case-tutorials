@@ -100,7 +100,7 @@ function getRecentFailedAttempts(visitorId) {
   return row.count;
 }
 
-// Record a successful login attempt
+// Check whether the account has any prior successful login
 function hasAnySuccessfulLogin(email) {
   return !!db
     .prepare(
