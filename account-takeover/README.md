@@ -30,7 +30,7 @@ This repo includes a simple Puppeteer script to simulate a headless bot login at
 node test-bot.js
 ```
 
-The request will be flagged and rejected by the Bot Detection signal.
+After you complete the tutorial steps to integrate Fingerprint-based decisioning into the `/api/login` endpoint, this request will be flagged and rejected by the Bot Detection signal.
 
 ### Test account
 
