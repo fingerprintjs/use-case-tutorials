@@ -1,8 +1,8 @@
-# Fingerprint Credential Stuffing Prevention Tutorial
+# Fingerprint Account Takeover Prevention Tutorial
 
-This use case tutorial shows how to prevent credential stuffing attacks using Fingerprint.
+This use case tutorial shows how to prevent account takeover attacks using Fingerprint.
 
-See the full guide at [Credential Stuffing Use Case Tutorial](https://docs.fingerprint.com/docs/credential-stuffing-use-case-tutorial).
+See the full guide at [Account Takeover Use Case Tutorial](https://docs.fingerprint.com/docs/account-takeover-use-case-tutorial).
 
 ## Setup
 
@@ -13,13 +13,14 @@ npm install
 ```
 
 2. Copy or rename `.env.example` to `.env` and add your Fingerprint API keys.
+
 3. Start the server:
 
 ```bash
 npm run dev
 ```
 
-4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
+4. Visit [http://localhost:3000](http://localhost:3000) in your browser to view the demo application.
 
 ### Running the bot test
 
@@ -29,7 +30,7 @@ This repo includes a simple Puppeteer script to simulate a headless bot login at
 node test-bot.js
 ```
 
-The request will be flagged and rejected by the Bot Detection signal.
+After you complete the tutorial steps to integrate Fingerprint-based decisioning into the `/api/login` endpoint, this request will be flagged and rejected by the Bot Detection signal.
 
 ### Test account
 
