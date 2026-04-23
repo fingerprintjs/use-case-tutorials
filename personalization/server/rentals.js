@@ -5,12 +5,7 @@ export async function getRentals() {
     fs.readFileSync("./server/data/rentals.json", "utf-8")
   );
 
-  const shuffled = shuffle(rentals);
-  return { success: true, rentals: shuffled };
-}
+  rentals.sort(() => Math.random() - 0.5);
 
-// --- Helper functions ---
-// Shuffle an array
-function shuffle(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
+  return { success: true, rentals };
 }
