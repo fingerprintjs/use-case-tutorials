@@ -1,6 +1,5 @@
 // --- State ---
 let allRentals = [];
-let hotRentals = [];
 const activeTypes = new Set();
 const activeAmenities = new Set();
 let minGuests = null;
@@ -90,12 +89,6 @@ function getFiltered() {
 }
 
 // --- Render ---
-function renderHotRentals() {
-  const grid = document.getElementById("hotRentalsGrid");
-  grid.innerHTML = "";
-  hotRentals.forEach((r) => grid.appendChild(createCard(r)));
-}
-
 function render() {
   const rentals = getFiltered();
   document.getElementById("rentalCount").textContent = `${
@@ -183,12 +176,12 @@ document.getElementById("resetBtn").addEventListener("click", async () => {
 // --- Get rentals ---
 async function init() {
   try {
-    const data = await fetch("/api/rentals").then((r) => r.json());
+    const response = await fetch("/api/rentals");
+    const data = await response.json();
+
     allRentals = data.rentals ?? [];
-    hotRentals = data.hotRentals ?? [];
 
     document.getElementById("loadingState").classList.add("hidden");
-    renderHotRentals();
     render();
   } catch (err) {
     console.error("Failed to load rentals:", err);

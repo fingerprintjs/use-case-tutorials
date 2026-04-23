@@ -20,6 +20,5 @@ function shuffle(arr) {
 
 export function getRentals() {
   const shuffled = shuffle(rentals);
-  const hotRentals = shuffle(rentals).slice(0, 3);
-  return { success: true, rentals: shuffled, hotRentals };
+  return { success: true, rentals: shuffled };
 }
