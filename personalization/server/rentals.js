@@ -5,7 +5,8 @@ export async function getRentals() {
     fs.readFileSync("./server/data/rentals.json", "utf-8")
   );
 
+  const hotRentals = rentals.slice(0, 3);
   rentals.sort(() => Math.random() - 0.5);
 
-  return { success: true, rentals };
+  return { success: true, rentals, hotRentals };
 }
