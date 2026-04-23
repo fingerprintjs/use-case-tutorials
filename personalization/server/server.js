@@ -39,8 +39,9 @@ app.get("/config.js", (_req, reply) => {
 });
 
 // Return all rental listings
-app.get("/api/rentals", (_req, reply) => {
-  return reply.send(getRentals());
+app.get("/api/rentals", async (req, reply) => {
+  const result = await getRentals();
+  return reply.send(result);
 });
 
 // Clear all visitor data for the current visitor
