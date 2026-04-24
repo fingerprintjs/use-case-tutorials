@@ -64,7 +64,7 @@ app.get("/api/reset", async (_req, reply) => {
 });
 
 // Start the server
-const port = process.env.PORT || 3005;
+const port = process.env.PORT || 3000;
 app.listen({ port }, (err) => {
   if (err) throw err;
   console.log(`Server running at http://localhost:${port}`);

@@ -266,6 +266,8 @@ function debouncedSave() {
 }
 
 async function saveFilters() {
+  if (!visitorId) return;
+
   await fetch("/api/preferences", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
