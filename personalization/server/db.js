@@ -13,4 +13,8 @@ export function initDb() {
   `);
 }
 
+export function resetDb() {
+  db.exec(`DELETE FROM visitor_preferences;`);
+}
+
 export { db };

@@ -3,7 +3,7 @@ import fastifyStatic from "@fastify/static";
 import { config } from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { initDb } from "./db.js";
+import { initDb, resetDb } from "./db.js";
 import { getRentals } from "./rentals.js";
 
 config();
@@ -44,8 +44,9 @@ app.get("/api/rentals", async (req, reply) => {
   return reply.send(result);
 });
 
-// Clear all visitor data for the current visitor
-app.post("/api/reset", (_req, reply) => {
+// Reset the demo
+app.get("/api/reset", async (_req, reply) => {
+  resetDb();
   return reply.send({ success: true });
 });
 
