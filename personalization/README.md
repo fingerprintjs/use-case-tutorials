@@ -1,6 +1,6 @@
 # Fingerprint Personalization Tutorial
 
-This use case tutorial shows how to personalize user experiences for returning users using Fingerprint.
+This use case tutorial shows how to personalize user experiences for new and returning users using Fingerprint.
 
 See the full guide at [Personalization Use Case Tutorial](https://docs.fingerprint.com/docs/personalization-use-case-tutorial).
 
