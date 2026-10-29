@@ -14,7 +14,6 @@
   "type": "module",
   "dependencies": {
     "@fastify/static": "^10.1.8",
-    "@fingerprint/node-sdk": "^7.0.0",
     "better-sqlite3": "^12.2.0",
     "dotenv": "^17.2.1",
     "fastify": "^5.5.0"
