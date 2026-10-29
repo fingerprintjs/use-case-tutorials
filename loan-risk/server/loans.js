@@ -1,9 +1,6 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 import crypto from "crypto";
 const MONTHLY_RATE = 0.15;
 
@@ -12,19 +9,13 @@ config();
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
 export async function requestLoan(data) {
-  const {
-    firstName,
-    lastName,
-    loanAmount,
-    monthlyIncome,
-    loanTerms,
-    eventId,
-  } = data;
+  const { firstName, lastName, loanAmount, monthlyIncome, loanTerms, eventId } =
+    data;
 
   if (
     (!firstName || !lastName || !loanAmount || !monthlyIncome || !loanTerms,
@@ -117,7 +108,7 @@ function recordLoanApplication(data, status) {
   } = data;
 
   db.prepare(
-    `INSERT INTO loan_applications (visitorId, firstName, lastName, monthlyIncome, loanAmount, loanTerms, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    `INSERT INTO loan_applications (visitorId, firstName, lastName, monthlyIncome, loanAmount, loanTerms, status, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
   ).run(
     visitorId,
     firstName,
@@ -126,7 +117,7 @@ function recordLoanApplication(data, status) {
     loanAmount,
     loanTerms,
     status,
-    Date.now()
+    Date.now(),
   );
 }
 
@@ -151,7 +142,7 @@ function isConsistent({ visitorId, firstName, lastName, monthlyIncome }) {
   const row = db
     .prepare(
       `SELECT firstName, lastName, monthlyIncome FROM loan_applications WHERE visitorId = ?
-    ORDER BY createdAt ASC LIMIT 1`
+    ORDER BY createdAt ASC LIMIT 1`,
     )
     .get(visitorId);
 
@@ -170,7 +161,7 @@ function isConsistent({ visitorId, firstName, lastName, monthlyIncome }) {
 function getApplicationCount(visitorId) {
   const row = db
     .prepare(
-      `SELECT COUNT(*) AS count FROM loan_applications WHERE visitorId = ?`
+      `SELECT COUNT(*) AS count FROM loan_applications WHERE visitorId = ?`,
     )
     .get(visitorId);
   return row.count;

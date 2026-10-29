@@ -1,16 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -77,6 +74,6 @@ function getLastDeviceFor(email) {
 function saveDeviceFor(email, visitorId) {
   db.prepare(
     `INSERT OR IGNORE INTO account_devices (email, visitorId, createdAt)
-     VALUES (?, ?, ?)`
+     VALUES (?, ?, ?)`,
   ).run(email, visitorId, Date.now());
 }

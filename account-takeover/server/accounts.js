@@ -5,7 +5,7 @@ import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -42,7 +42,7 @@ export async function attemptLogin({ email, password, eventId }) {
   const accountHasSuccessfulLogins = hasAnySuccessfulLogin(email);
   const visitorHasLoggedInBefore = hasSuccessfulLoginForVisitor(
     email,
-    visitorId
+    visitorId,
   );
 
   if (accountHasSuccessfulLogins && !visitorHasLoggedInBefore) {
@@ -83,7 +83,7 @@ function findAccountByEmail(email) {
 // Record a failed login attempt
 function logFailedAttempt(visitorId, email) {
   db.prepare(
-    `INSERT INTO login_attempts (visitorId, email, success, createdAt) VALUES (?, ?, 0, ?)`
+    `INSERT INTO login_attempts (visitorId, email, success, createdAt) VALUES (?, ?, 0, ?)`,
   ).run(visitorId, email, Date.now());
 }
 
@@ -94,7 +94,7 @@ function getRecentFailedAttempts(visitorId) {
     .prepare(
       `SELECT COUNT(*) as count
        FROM login_attempts
-       WHERE visitorId = ? AND success = 0 AND createdAt >= ?`
+       WHERE visitorId = ? AND success = 0 AND createdAt >= ?`,
     )
     .get(visitorId, since);
   return row.count;
@@ -104,7 +104,7 @@ function getRecentFailedAttempts(visitorId) {
 function hasAnySuccessfulLogin(email) {
   return !!db
     .prepare(
-      `SELECT 1 FROM login_attempts WHERE email = ? AND success = 1 LIMIT 1`
+      `SELECT 1 FROM login_attempts WHERE email = ? AND success = 1 LIMIT 1`,
     )
     .get(email);
 }
@@ -113,7 +113,7 @@ function hasAnySuccessfulLogin(email) {
 function hasSuccessfulLoginForVisitor(email, visitorId) {
   return !!db
     .prepare(
-      `SELECT 1 FROM login_attempts WHERE email = ? AND visitorId = ? AND success = 1 LIMIT 1`
+      `SELECT 1 FROM login_attempts WHERE email = ? AND visitorId = ? AND success = 1 LIMIT 1`,
     )
     .get(email, visitorId);
 }
@@ -121,6 +121,6 @@ function hasSuccessfulLoginForVisitor(email, visitorId) {
 // Record a successful login attempt
 function logSuccessfulAttempt(visitorId, email) {
   db.prepare(
-    `INSERT INTO login_attempts (visitorId, email, success, createdAt) VALUES (?, ?, 1, ?)`
+    `INSERT INTO login_attempts (visitorId, email, success, createdAt) VALUES (?, ?, 1, ?)`,
   ).run(visitorId, email, Date.now());
 }

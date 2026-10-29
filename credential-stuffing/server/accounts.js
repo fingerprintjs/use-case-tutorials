@@ -1,16 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -70,7 +67,7 @@ function findAccountByEmail(email) {
 // Log a failed login attempt
 function logFailedAttempt(visitorId) {
   db.prepare(
-    `INSERT INTO failed_logins (visitorId, createdAt) VALUES (?, ?)`
+    `INSERT INTO failed_logins (visitorId, createdAt) VALUES (?, ?)`,
   ).run(visitorId, Date.now());
 }
 
@@ -81,7 +78,7 @@ function getRecentFailedAttempts(visitorId) {
     .prepare(
       `SELECT COUNT(*) as count 
        FROM failed_logins 
-       WHERE visitorId = ? AND createdAt >= ?`
+       WHERE visitorId = ? AND createdAt >= ?`,
     )
     .get(visitorId, since);
   return row.count;

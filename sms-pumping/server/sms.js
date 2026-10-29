@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -57,7 +54,7 @@ function sendVerificationCode(phone, visitorId) {
   console.log(`Pretending to send SMS to ${phone}`);
 
   db.prepare(
-    "INSERT INTO sms_codes (visitorId, phone, code, createdAt, expiresAt) VALUES (?, ?, ?, ?, ?)"
+    "INSERT INTO sms_codes (visitorId, phone, code, createdAt, expiresAt) VALUES (?, ?, ?, ?, ?)",
   ).run(visitorId, phone, code, createdAt, expiresAt);
 }
 
@@ -69,7 +66,7 @@ function countRecentSMSRequests(visitorId) {
     .prepare(
       `SELECT COUNT(*) AS count
        FROM sms_codes
-       WHERE visitorId = ? AND createdAt >= ?`
+       WHERE visitorId = ? AND createdAt >= ?`,
     )
     .get(visitorId, since);
 

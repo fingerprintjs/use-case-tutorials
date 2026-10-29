@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -22,7 +19,7 @@ export async function postPurchase(body) {
   try {
     db.prepare(
       `INSERT INTO purchases (eventName, ticketQuantity, price, creditCard, deliveryEmail, visitorId, createdAt)
-      VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @visitorId, @createdAt)`
+      VALUES (@eventName, @ticketQuantity, @price, @creditCard, @deliveryEmail, @visitorId, @createdAt)`,
     ).run({ ...body, visitorId, createdAt });
     return { success: true, message: "Purchase completed successfully." };
   } catch (err) {
@@ -38,7 +35,7 @@ export function getUserPurchases(email) {
   try {
     const purchases = db
       .prepare(
-        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases WHERE deliveryEmail = ?"
+        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases WHERE deliveryEmail = ?",
       )
       .all(email);
     return { success: true, purchases };
@@ -71,7 +68,7 @@ export function getRelatedPurchases(orderId) {
         `SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, visitorId, createdAt
         FROM purchases
         WHERE deliveryEmail = ? OR visitorId = ?
-        ORDER BY createdAt DESC`
+        ORDER BY createdAt DESC`,
       )
       .all(deliveryEmail, visitorId);
 
@@ -89,7 +86,7 @@ export function getAllPurchases() {
   try {
     const purchases = db
       .prepare(
-        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases ORDER BY createdAt DESC"
+        "SELECT id, eventName, ticketQuantity, price, creditCard, deliveryEmail, chargeback, createdAt FROM purchases ORDER BY createdAt DESC",
       )
       .all();
     return { success: true, purchases };
@@ -105,7 +102,7 @@ export function getAllPurchases() {
 export function disputePurchase(purchaseId) {
   try {
     db.prepare("UPDATE purchases SET chargeback = 1 WHERE id = ?").run(
-      purchaseId
+      purchaseId,
     );
     return { success: true, message: "Chargeback initiated successfully." };
   } catch (err) {

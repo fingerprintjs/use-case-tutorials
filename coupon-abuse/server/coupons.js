@@ -1,16 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -69,7 +66,7 @@ function getValidCoupon(code) {
       SELECT code, discountPct
       FROM coupons
       WHERE code = ? COLLATE NOCASE
-    `
+    `,
     )
     .get(code);
 
@@ -82,7 +79,7 @@ function getValidCoupon(code) {
 function hasRedeemed(code, visitorId) {
   return !!db
     .prepare(
-      `SELECT 1 FROM redemptions WHERE code = ? AND visitorId = ? LIMIT 1`
+      `SELECT 1 FROM redemptions WHERE code = ? AND visitorId = ? LIMIT 1`,
     )
     .get(code, visitorId);
 }
@@ -90,6 +87,6 @@ function hasRedeemed(code, visitorId) {
 // Record the visitor redeeming the coupon
 function recordRedemption(code, visitorId) {
   db.prepare(
-    `INSERT INTO redemptions (code, visitorId, createdAt) VALUES (?, ?, ?)`
+    `INSERT INTO redemptions (code, visitorId, createdAt) VALUES (?, ?, ?)`,
   ).run(code, visitorId, Date.now());
 }

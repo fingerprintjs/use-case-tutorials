@@ -21,7 +21,7 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Running the bot test
+## Running the bot test
 
 This repo includes a simple Puppeteer script to simulate a headless bot card testing attempt. To run it, use the following command while the server is running:
 

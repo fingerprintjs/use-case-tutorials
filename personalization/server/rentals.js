@@ -6,7 +6,7 @@ import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -17,7 +17,7 @@ export async function getRentals(eventId) {
     event.ip_info.v4.geolocation || event.ip_info.v6.geolocation || {};
 
   const rentals = JSON.parse(
-    fs.readFileSync("./server/data/rentals.json", "utf-8")
+    fs.readFileSync("./server/data/rentals.json", "utf-8"),
   );
 
   let hotRentals = rentals.slice(0, 3);
@@ -58,14 +58,14 @@ export function addRecentlyViewed(visitorId, rentalId) {
   const current = getRecentlyViewedFor(visitorId) ?? [];
   const updated = [rentalId, ...current.filter((id) => id !== rentalId)].slice(
     0,
-    10
+    10,
   );
   db.prepare(
     `
     INSERT INTO visitor_preferences (visitorId, recentlyViewed, updatedAt)
     VALUES (?, ?, ?)
     ON CONFLICT(visitorId) DO UPDATE SET recentlyViewed = excluded.recentlyViewed, updatedAt = excluded.updatedAt
-  `
+  `,
   ).run(visitorId, JSON.stringify(updated), Date.now());
   return { success: true };
 }
@@ -84,14 +84,14 @@ function saveFiltersFor(visitorId, filters) {
     INSERT INTO visitor_preferences (visitorId, filters, updatedAt)
     VALUES (?, ?, ?)
     ON CONFLICT(visitorId) DO UPDATE SET filters = excluded.filters, updatedAt = excluded.updatedAt
-  `
+  `,
   ).run(visitorId, JSON.stringify(filters), Date.now());
 }
 
 function getRecentlyViewedFor(visitorId) {
   const row = db
     .prepare(
-      `SELECT recentlyViewed FROM visitor_preferences WHERE visitorId = ?`
+      `SELECT recentlyViewed FROM visitor_preferences WHERE visitorId = ?`,
     )
     .get(visitorId);
   return row ? JSON.parse(row.recentlyViewed) : null;

@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -48,7 +45,7 @@ export async function attemptSignup({ username, password, eventId }) {
   }
 
   db.prepare(
-    `INSERT INTO accounts (username, password, visitorId, createdAt) VALUES (?, ?, ?, ?)`
+    `INSERT INTO accounts (username, password, visitorId, createdAt) VALUES (?, ?, ?, ?)`,
   ).run(username, password, visitorId, Date.now());
 
   return { success: true };

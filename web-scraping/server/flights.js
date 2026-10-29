@@ -1,16 +1,13 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 // Change region to match your workspace region
 // (e.g., "EU" for Europe, "AP" for Asia, "Global" for Global (default))
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -41,7 +38,7 @@ export async function fetchFlights({ from, to, departDate, eventId }) {
   // Otherwise, fetch flights
   let flights = db
     .prepare(
-      `SELECT * FROM flights WHERE origin_airport = ? AND destination_airport = ?`
+      `SELECT * FROM flights WHERE origin_airport = ? AND destination_airport = ?`,
     )
     .all(from, to);
 

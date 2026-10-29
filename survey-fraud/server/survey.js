@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -48,7 +45,7 @@ function checkForDuplicateSubmission(email, visitorId) {
   const submission = db
     .prepare(
       `SELECT * FROM survey_submissions 
-       WHERE email = ? OR visitorId = ?`
+       WHERE email = ? OR visitorId = ?`,
     )
     .get(email, visitorId);
 
@@ -64,7 +61,7 @@ function saveSurveySubmission(data) {
       `
       INSERT INTO survey_submissions (visitorId, firstName, email, q1, q2, q3, q4, createdAt)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `
+    `,
     ).run(visitorId, firstName, email, q1, q2, q3, q4, Date.now());
     return { success: true };
   } catch (error) {

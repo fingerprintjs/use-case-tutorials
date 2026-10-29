@@ -11,6 +11,7 @@ Current tutorials:
 
 - [**Account sharing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/account-sharing) – Prevent account sharing across multiple devices.
 - [**Ban evasion prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/ban-evasion) – Prevent banned users from evading enforcement and returning under new accounts.
+- [**Bonus abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/bonus-abuse) – Limit promos and bonuses to one per device.
 - [**Card testing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/card-testing) – Stop card testing and card cracking attacks using device intelligence.
 - [**Chargeback dispute support**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/chargeback-dispute) – Link purchases to devices to help investigate and dispute chargebacks.
 - [**Coupon abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/coupon-abuse) – Enforce appropriate coupon usage per visitor.
@@ -24,6 +25,8 @@ Current tutorials:
 - [**Web scraping prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/web-scraping) – Protect your proprietary content from being scraped by bots.
 
 ## General setup
+
+The demo apps require [Node.js](https://nodejs.org/) v22 or later.
 
 1. Clone this repo and **within the use case folder of interest**, run:
 
@@ -43,7 +46,7 @@ npm run dev
 
 ## Resetting the demo databases
 
-To reset the demo database for a given use case:
+To reset the demo database for a use case that has one:
 
 - Click **Reset demo DB** at the bottom of the demo app page, or
 - Run this from the terminal:

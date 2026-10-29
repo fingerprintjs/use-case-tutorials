@@ -5,7 +5,7 @@ import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -81,7 +81,7 @@ function getDiscountPct(countryCode) {
 
   try {
     const regionalDiscounts = JSON.parse(
-      fs.readFileSync("./server/data/regional_discounts.json", "utf-8")
+      fs.readFileSync("./server/data/regional_discounts.json", "utf-8"),
     );
 
     return regionalDiscounts[countryCode] || 0;

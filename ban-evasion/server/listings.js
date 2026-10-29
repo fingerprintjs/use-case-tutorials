@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -60,7 +57,7 @@ export function banSeller(listingId) {
     const visitorId = listing.visitorId;
 
     db.prepare(
-      "INSERT INTO banned_visitors (visitorId, bannedAt) VALUES (?, ?)"
+      "INSERT INTO banned_visitors (visitorId, bannedAt) VALUES (?, ?)",
     ).run(visitorId, bannedAt);
     return { success: true, message: "Seller banned successfully." };
   } catch (err) {
@@ -74,7 +71,7 @@ export function getListings() {
   try {
     listings = db
       .prepare(
-        "SELECT id, eventName, eventDate, ticketCount, venue, sellerEmail, price, ticketDescription FROM listings"
+        "SELECT id, eventName, eventDate, ticketCount, venue, sellerEmail, price, ticketDescription FROM listings",
       )
       .all();
     return { success: true, listings };
@@ -93,7 +90,7 @@ function saveListing(listing) {
   const createdAt = Date.now();
   try {
     db.prepare(
-      "INSERT INTO listings (eventName, eventDate, ticketCount, venue, sellerEmail, price, ticketDescription, visitorId, createdAt) VALUES (@eventName, @eventDate, @ticketCount, @venue, @sellerEmail, @price, @ticketDescription, @visitorId, @createdAt)"
+      "INSERT INTO listings (eventName, eventDate, ticketCount, venue, sellerEmail, price, ticketDescription, visitorId, createdAt) VALUES (@eventName, @eventDate, @ticketCount, @venue, @sellerEmail, @price, @ticketDescription, @visitorId, @createdAt)",
     ).run({ ...listing, createdAt });
     return { success: true, message: "Listing saved successfully." };
   } catch (err) {

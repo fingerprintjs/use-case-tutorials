@@ -1,14 +1,11 @@
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -77,7 +74,7 @@ function validatePaymentFields({ cardNumber, cardExp, cardCvv }) {
 // Save the order to the database
 function saveOrder({ recipientEmail, amount, visitorId }) {
   db.prepare(
-    "INSERT INTO orders (recipientEmail, amount, visitorId, createdAt) VALUES (?, ?, ?, ?)"
+    "INSERT INTO orders (recipientEmail, amount, visitorId, createdAt) VALUES (?, ?, ?, ?)",
   ).run(recipientEmail, amount, visitorId, Date.now());
 }
 
@@ -89,7 +86,7 @@ function countRecentOrders(visitorId) {
     .prepare(
       `SELECT COUNT(*) AS count
        FROM orders
-       WHERE visitorId = ? AND createdAt >= ?`
+       WHERE visitorId = ? AND createdAt >= ?`,
     )
     .get(visitorId, since);
 

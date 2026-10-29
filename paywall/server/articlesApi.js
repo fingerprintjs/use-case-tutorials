@@ -1,15 +1,12 @@
 import fs from "fs";
 import { db } from "./db.js";
 import { config } from "dotenv";
-import {
-  FingerprintServerApiClient,
-  Region,
-} from "@fingerprint/node-sdk";
+import { FingerprintServerApiClient, Region } from "@fingerprint/node-sdk";
 
 config();
 
 const fpServerApiClient = new FingerprintServerApiClient({
-  apiKey: process.env.FP_SECRET_API_KEY,
+  apiKey: process.env.FP_SERVER_API_KEY,
   region: Region.Global,
 });
 
@@ -22,12 +19,12 @@ export async function getArticle(articleId, eventId) {
   const articlesRead = getArticlesRead(visitorId);
   const articlesRemaining = Math.max(
     0,
-    FREE_ARTICLES_LIMIT - articlesRead.length
+    FREE_ARTICLES_LIMIT - articlesRead.length,
   );
 
   // Simple article retrieval for demo
   const articles = JSON.parse(
-    fs.readFileSync("./server/data/articles.json", "utf-8")
+    fs.readFileSync("./server/data/articles.json", "utf-8"),
   );
   const article = articles.find((a) => a.id === Number(articleId));
   if (!article) {
@@ -75,10 +72,7 @@ export async function getArticle(articleId, eventId) {
   // Record read and return updated remaining count
   recordArticleRead(visitorId, articleId);
   const articlesReadNow = getArticlesRead(visitorId);
-  const remaining = Math.max(
-    0,
-    FREE_ARTICLES_LIMIT - articlesReadNow.length
-  );
+  const remaining = Math.max(0, FREE_ARTICLES_LIMIT - articlesReadNow.length);
   return {
     success: true,
     article,
@@ -89,7 +83,7 @@ export async function getArticle(articleId, eventId) {
 // Get article summaries
 export async function getArticleSummaries() {
   const articles = JSON.parse(
-    fs.readFileSync("./server/data/articles.json", "utf-8")
+    fs.readFileSync("./server/data/articles.json", "utf-8"),
   );
 
   const summaries = articles.map((article) => ({
@@ -111,13 +105,13 @@ export async function getArticleSummaries() {
 function recordArticleRead(visitorId, articleId) {
   const exists = db
     .prepare(
-      `SELECT 1 FROM articles_read WHERE visitorId = ? AND articleId = ? LIMIT 1`
+      `SELECT 1 FROM articles_read WHERE visitorId = ? AND articleId = ? LIMIT 1`,
     )
     .get(visitorId, articleId);
 
   if (!exists) {
     db.prepare(
-      `INSERT INTO articles_read (visitorId, articleId, createdAt) VALUES (?, ?, ?)`
+      `INSERT INTO articles_read (visitorId, articleId, createdAt) VALUES (?, ?, ?)`,
     ).run(visitorId, articleId, Date.now());
   }
 }
@@ -129,7 +123,7 @@ function getArticlesRead(visitorId) {
       `SELECT DISTINCT articleId 
        FROM articles_read 
        WHERE visitorId = ? 
-       ORDER BY createdAt ASC`
+       ORDER BY createdAt ASC`,
     )
     .all(visitorId);
   return rows.map((r) => r.articleId);
