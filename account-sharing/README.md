@@ -21,14 +21,24 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Test account
+## Running the bot test
+
+This repo includes a simple Puppeteer script to simulate a headless bot login attempt. To run it, use the following command while the server is running:
+
+```bash
+node test-bot.js
+```
+
+After you complete the tutorial steps, this request will be rejected by the Bot Detection Smart Signal.
+
+## Test account
 
 A default account is included for testing:
 
 - Email: `demo@example.com`
 - Password: `password123`
 
-### Resetting the demo database
+## Resetting the demo database
 
 To clear stored device associations:
 

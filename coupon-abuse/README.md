@@ -21,7 +21,17 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Default coupons
+## Running the bot test
+
+This repo includes a simple Puppeteer script to simulate a headless bot applying a coupon. To run it, use the following command while the server is running:
+
+```bash
+node test-bot.js
+```
+
+After you complete the tutorial steps, this request will be rejected by the Bot Detection Smart Signal.
+
+## Default coupons
 
 The default coupons are:
 
