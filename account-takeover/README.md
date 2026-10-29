@@ -22,7 +22,7 @@ npm run dev
 
 4. Visit [http://localhost:3000](http://localhost:3000) in your browser to view the demo application.
 
-### Running the bot test
+## Running the bot test
 
 This repo includes a simple Puppeteer script to simulate a headless bot login attempt. To run it, use the following command while the server is running:
 
@@ -30,9 +30,9 @@ This repo includes a simple Puppeteer script to simulate a headless bot login at
 node test-bot.js
 ```
 
-After you complete the tutorial steps to integrate Fingerprint-based decisioning into the `/api/login` endpoint, this request will be flagged and rejected by the Bot Detection signal.
+After you complete the tutorial steps to integrate Fingerprint-based decisioning into the `/api/login` endpoint, this request will be flagged and rejected by the Bot Detection Smart Signal.
 
-### Test account
+## Test account
 
 A default account is included for testing:
 
