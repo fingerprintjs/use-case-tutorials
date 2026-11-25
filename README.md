@@ -10,6 +10,7 @@ Each tutorial is a self-contained demo application with:
 Current tutorials:
 
 - [**Account sharing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/account-sharing) – Prevent account sharing across multiple devices.
+- [**AI token abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/ai-token-abuse) – Limit free AI credits to one grant per device.
 - [**Ban evasion prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/ban-evasion) – Prevent banned users from evading enforcement and returning under new accounts.
 - [**Bonus abuse prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/bonus-abuse) – Limit promos and bonuses to one per device.
 - [**Card testing prevention**](https://github.com/fingerprintjs/use-case-tutorials/tree/starter/card-testing) – Stop card testing and card cracking attacks using device intelligence.
